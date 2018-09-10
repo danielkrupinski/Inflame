@@ -32,7 +32,8 @@ library kernel32, 'kernel32.dll', \
         msvcrt, 'msvcrt.dll'
 
 import kernel32, \
-       ExitProcess, 'ExitProcess'
+       ExitProcess, 'ExitProcess', \
+       GetFullPathNameA, 'GetFullPathNameA'
 
 import msvcrt, \
        __getmainargs, '__getmainargs', \
