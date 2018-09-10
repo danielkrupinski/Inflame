@@ -16,7 +16,9 @@ error:
     invoke ExitProcess, 1
 
 proc inject
-
+    mov esi, [argv]
+    add esi, 4
+    invoke GetFullPathNameA, dword [esi], 260, dllPath, 0
     ret
 endp
 
