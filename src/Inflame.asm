@@ -7,10 +7,15 @@ section '.text' code executable
 
 main:
     cinvoke __getmainargs, argc, argv, env, 0
+    cmp [argc], 3
+    jne error
     mov esi,[argv]
     cinvoke printf, dword [esi]
     cinvoke getchar
     invoke ExitProcess, 0
+
+error:
+    invoke ExitProcess, 1
 
 section '.data' data readable writable
 
