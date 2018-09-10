@@ -4,10 +4,14 @@ entry main
 include 'win32ax.inc'
 
 section '.text' code executable
+
 main:
 
 section '.data' data readable writable
 
+argc    dd ?
+argv    dd ?
+env     dd ?
 
 section '.idata' data readable import
 
