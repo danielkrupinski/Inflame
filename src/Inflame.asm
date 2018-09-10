@@ -7,3 +7,6 @@ section '.text' code executable
 main:
 
 section '.idata' data readable import
+
+library kernel32, 'kernel32.dll', \
+        msvcrt, 'msvcrt.dll'
