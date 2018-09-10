@@ -25,6 +25,7 @@ section '.data' data readable writable
 argc    dd ?
 argv    dd ?
 env     dd ?
+dllPath rb 260
 
 section '.idata' data readable import
 
