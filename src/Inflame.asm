@@ -13,3 +13,8 @@ library kernel32, 'kernel32.dll', \
 
 import kernel32, \
        ExitProcess, 'ExitProcess'
+
+import msvcrt, \
+       __getmainargs, '__getmainargs', \
+       printf, 'printf', \
+       getchar, 'getchar'
