@@ -6,6 +6,9 @@ include 'win32ax.inc'
 section '.text' code executable
 main:
 
+section '.data' data readable writable
+
+
 section '.idata' data readable import
 
 library kernel32, 'kernel32.dll', \
