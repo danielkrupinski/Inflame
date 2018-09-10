@@ -7,6 +7,10 @@ section '.text' code executable
 
 main:
     cinvoke __getmainargs, argc, argv, env, 0
+    mov esi,[argv]
+    cinvoke printf, dword [esi]
+    cinvoke getchar
+    invoke ExitProcess, 0
 
 section '.data' data readable writable
 
