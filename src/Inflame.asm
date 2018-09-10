@@ -6,6 +6,7 @@ include 'win32ax.inc'
 section '.text' code executable
 
 main:
+    cinvoke __getmainargs, argc, argv, env, 0
 
 section '.data' data readable writable
 
