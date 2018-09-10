@@ -37,7 +37,8 @@ library kernel32, 'kernel32.dll', \
 import kernel32, \
        ExitProcess, 'ExitProcess', \
        GetFullPathNameA, 'GetFullPathNameA', \
-       GetModuleHandle, 'GetModuleHandle'
+       GetModuleHandle, 'GetModuleHandle', \
+       GetProcAddress, 'GetProcAddress'
 
 import msvcrt, \
        __getmainargs, '__getmainargs', \
