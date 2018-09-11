@@ -39,6 +39,7 @@ env     dd ?
 dllPath rb MAX_PATH
 dllPathLength dd ?
 loadLibraryAddress dd ?
+processHandle dd ?
 
 section '.idata' data readable import
 
