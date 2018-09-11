@@ -51,7 +51,8 @@ import kernel32, \
        GetModuleHandleA, 'GetModuleHandleA', \
        GetProcAddress, 'GetProcAddress', \
        OpenProcess, 'OpenProcess', \
-       VirtualAllocEx, 'VirtualAllocEx'
+       VirtualAllocEx, 'VirtualAllocEx', \
+       WriteProcessMemory, 'WriteProcessMemory'
 
 import msvcrt, \
        __getmainargs, '__getmainargs', \
