@@ -7,7 +7,7 @@ section '.text' code executable
 
 main:
     cinvoke __getmainargs, argc, argv, env, 0
-    cmp [argc], 3
+    cmp [argc], 2
     jne error
     stdcall inject
     invoke ExitProcess, 0
@@ -19,6 +19,8 @@ proc inject
     mov esi, [argv]
     add esi, 4
     invoke GetFullPathNameA, dword [esi], 260, dllPath, 0
+    invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>
+    cinvoke printf, <'%s', 10, '%d'>, dllPath, eax
     ret
 endp
 
@@ -37,7 +39,7 @@ library kernel32, 'kernel32.dll', \
 import kernel32, \
        ExitProcess, 'ExitProcess', \
        GetFullPathNameA, 'GetFullPathNameA', \
-       GetModuleHandle, 'GetModuleHandle', \
+       GetModuleHandleA, 'GetModuleHandleA', \
        GetProcAddress, 'GetProcAddress'
 
 import msvcrt, \
