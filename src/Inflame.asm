@@ -57,7 +57,8 @@ import kernel32, \
        GetProcAddress, 'GetProcAddress', \
        OpenProcess, 'OpenProcess', \
        VirtualAllocEx, 'VirtualAllocEx', \
-       WriteProcessMemory, 'WriteProcessMemory'
+       WriteProcessMemory, 'WriteProcessMemory', \
+       CreateRemoteThread, 'CreateRemoteThread'
 
 import msvcrt, \
        __getmainargs, '__getmainargs', \
