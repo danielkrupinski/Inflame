@@ -27,6 +27,7 @@ proc inject
     mov eax, [argv]
     add eax, 8
     invoke OpenProcess, PROCESS_ALL_ACCESS, FALSE, eax
+    invoke VirtualAllocEx, eax, NULL, dllPathLength, MEM_COMMIT, PAGE_EXECUTE_READWRITE
     ret
 endp
 
