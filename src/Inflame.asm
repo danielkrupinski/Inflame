@@ -19,6 +19,9 @@ proc inject
     mov esi, [argv]
     add esi, 4
     invoke GetFullPathNameA, dword [esi], MAX_PATH, dllPath, 0
+    cinvoke strlen, dllPath
+    inc eax
+    mov [dllPathLength], eax
     invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>
     mov [loadLibraryAddress], eax
     mov eax, [argv]
