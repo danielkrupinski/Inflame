@@ -33,6 +33,7 @@ argc    dd ?
 argv    dd ?
 env     dd ?
 dllPath rb MAX_PATH
+dllPathLength dd ?
 loadLibraryAddress dd ?
 
 section '.idata' data readable import
