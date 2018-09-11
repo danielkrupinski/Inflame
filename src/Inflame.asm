@@ -18,7 +18,7 @@ error:
 proc inject
     mov esi, [argv]
     add esi, 4
-    invoke GetFullPathNameA, dword [esi], 260, dllPath, 0
+    invoke GetFullPathNameA, dword [esi], MAX_PATH, dllPath, 0
     invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>
     cinvoke printf, <'%s', 10, '%d'>, dllPath, eax
     ret
@@ -29,7 +29,7 @@ section '.data' data readable writable
 argc    dd ?
 argv    dd ?
 env     dd ?
-dllPath rb 260
+dllPath rb MAX_PATH
 
 section '.idata' data readable import
 
