@@ -20,7 +20,7 @@ proc inject
     add esi, 4
     invoke GetFullPathNameA, dword [esi], MAX_PATH, dllPath, 0
     invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>
-    mov loadLibraryAddress, eax
+    mov [loadLibraryAddress], eax
     mov eax, [argv]
     add eax, 8
     invoke OpenProcess, PROCESS_ALL_ACCESS, FALSE, eax
