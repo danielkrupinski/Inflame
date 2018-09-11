@@ -45,7 +45,8 @@ import kernel32, \
        GetFullPathNameA, 'GetFullPathNameA', \
        GetModuleHandleA, 'GetModuleHandleA', \
        GetProcAddress, 'GetProcAddress', \
-       OpenProcess, 'OpenProcess'
+       OpenProcess, 'OpenProcess', \
+       VirtualAllocEx, 'VirtualAllocEx'
 
 import msvcrt, \
        __getmainargs, '__getmainargs', \
