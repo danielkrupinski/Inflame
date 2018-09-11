@@ -51,4 +51,5 @@ import kernel32, \
 import msvcrt, \
        __getmainargs, '__getmainargs', \
        printf, 'printf', \
-       getchar, 'getchar'
+       getchar, 'getchar', \
+       strlen, 'strlen'
