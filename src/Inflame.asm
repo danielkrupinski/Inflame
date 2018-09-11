@@ -40,7 +40,8 @@ import kernel32, \
        ExitProcess, 'ExitProcess', \
        GetFullPathNameA, 'GetFullPathNameA', \
        GetModuleHandleA, 'GetModuleHandleA', \
-       GetProcAddress, 'GetProcAddress'
+       GetProcAddress, 'GetProcAddress', \
+       OpenProcess, 'OpenProcess'
 
 import msvcrt, \
        __getmainargs, '__getmainargs', \
