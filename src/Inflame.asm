@@ -29,6 +29,7 @@ proc inject
     invoke OpenProcess, PROCESS_ALL_ACCESS, FALSE, eax
     mov [processHandle], eax
     invoke VirtualAllocEx, processHandle, NULL, dllPathLength, MEM_COMMIT, PAGE_EXECUTE_READWRITE
+    mov [allocatedMemory], eax
     ret
 endp
 
