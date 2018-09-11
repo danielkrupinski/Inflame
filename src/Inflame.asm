@@ -41,6 +41,7 @@ dllPath rb MAX_PATH
 dllPathLength dd ?
 loadLibraryAddress dd ?
 processHandle dd ?
+allocatedMemory dd ?
 
 section '.idata' data readable import
 
