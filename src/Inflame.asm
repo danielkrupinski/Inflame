@@ -26,7 +26,7 @@ proc inject
     mov [loadLibraryAddress], eax
     mov eax, [argv]
     add eax, 8
-    invoke OpenProcess, PROCESS_ALL_ACCESS, FALSE, eax
+    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_QUERY_INFORMATION + PROCESS_CREATE_THREAD, FALSE, eax
     mov [processHandle], eax
     invoke VirtualAllocEx, processHandle, NULL, dllPathLength, MEM_COMMIT, PAGE_EXECUTE_READWRITE
     mov [allocatedMemory], eax
