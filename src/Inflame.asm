@@ -7,7 +7,7 @@ section '.text' code executable
 
 main:
     cinvoke __getmainargs, argc, argv, env, 0
-    cmp [argc], 2
+    cmp [argc], 3
     jne error
     stdcall inject
     invoke ExitProcess, 0
