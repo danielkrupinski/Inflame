@@ -65,4 +65,5 @@ import msvcrt, \
        __getmainargs, '__getmainargs', \
        printf, 'printf', \
        getchar, 'getchar', \
-       strlen, 'strlen'
+       strlen, 'strlen', \
+       atoi, 'atoi'
