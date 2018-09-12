@@ -31,8 +31,8 @@ proc inject
     mov [processHandle], eax
     invoke VirtualAllocEx, processHandle, NULL, dllPathLength, MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
     mov [allocatedMemory], eax
-    invoke WriteProcessMemory, processHandle, allocatedMemory, dllPath, dllPathLength, NULL
-    invoke CreateRemoteThread, processHandle, NULL, 0, loadLibraryAddress, allocatedMemory, 0, NULL
+    invoke WriteProcessMemory, [processHandle], [allocatedMemory], dllPath, [dllPathLength], NULL
+    invoke CreateRemoteThread, [processHandle], NULL, 0, [loadLibraryAddress], [allocatedMemory], 0, NULL
     ret
 endp
 
