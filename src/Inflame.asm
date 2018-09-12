@@ -29,7 +29,7 @@ proc inject
     cinvoke atoi, dword [eax]
     invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_QUERY_INFORMATION + PROCESS_CREATE_THREAD, FALSE, eax
     mov [processHandle], eax
-    invoke VirtualAllocEx, processHandle, NULL, dllPathLength, MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
+    invoke VirtualAllocEx, [processHandle], NULL, [dllPathLength], MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
     mov [allocatedMemory], eax
     invoke WriteProcessMemory, [processHandle], [allocatedMemory], dllPath, [dllPathLength], NULL
     invoke CreateRemoteThread, [processHandle], NULL, 0, [loadLibraryAddress], [allocatedMemory], 0, NULL
