@@ -22,9 +22,9 @@ proc inject
     cinvoke strlen, dllPath
     inc eax
     mov [dllPathLength], eax
-    mov eax, [argv]
-    add eax, 8
-    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_QUERY_INFORMATION + PROCESS_CREATE_THREAD, FALSE, <cinvoke atoi, dword [eax]>
+    mov esi, [argv]
+    add esi, 8
+    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_QUERY_INFORMATION + PROCESS_CREATE_THREAD, FALSE, <cinvoke atoi, dword [esi]>
     mov [processHandle], eax
     invoke VirtualAllocEx, [processHandle], NULL, [dllPathLength], MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
     mov [allocatedMemory], eax
