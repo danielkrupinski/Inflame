@@ -22,7 +22,6 @@ proc inject
     cinvoke strlen, dllPath
     inc eax
     mov [dllPathLength], eax
-    invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>
     mov [loadLibraryAddress], eax
     mov eax, [argv]
     add eax, 8
