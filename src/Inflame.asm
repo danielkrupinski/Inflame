@@ -22,7 +22,6 @@ proc inject
     cinvoke strlen, dllPath
     inc eax
     mov [dllPathLength], eax
-    mov [loadLibraryAddress], eax
     mov eax, [argv]
     add eax, 8
     cinvoke atoi, dword [eax]
@@ -42,7 +41,6 @@ argv    dd ?
 env     dd ?
 dllPath rb MAX_PATH
 dllPathLength dd ?
-loadLibraryAddress dd ?
 processHandle dd ?
 allocatedMemory dd ?
 
