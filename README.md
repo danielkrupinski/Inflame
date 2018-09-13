@@ -4,7 +4,7 @@ User-mode Windows DLL injector written in Assembly (FASM)
 
 ## Features
 
-- minimal size: weighing 2kB, Inflame is a tiny little injector
+- **minimal size:** weighing `2kB`, Inflame is a tiny little injector
 
 ## Getting Started
 
