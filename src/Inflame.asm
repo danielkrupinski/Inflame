@@ -23,7 +23,7 @@ endp
 error:
     invoke ExitProcess, 1
 
-proc inject
+proc inject, argv
     mov esi, [argv]
     invoke GetFullPathNameA, dword [esi + 4], MAX_PATH, dllPath, 0
     cinvoke strlen, dllPath
