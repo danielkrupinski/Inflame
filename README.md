@@ -20,6 +20,12 @@ FASM (flat assembler) for Windows is required to compile Inflame. You can get th
 ```
 fasm Inflame.asm
 ```
+3. If everything went right you should see output similar to this one:
+```
+flat assembler  version 1.73.04  (1048576 kilobytes memory)
+3 passes, 1536 bytes.
+```
+and output executable `Inflame.exe` should exist.
 
 ## License
 
