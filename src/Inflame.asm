@@ -15,7 +15,7 @@ proc main
     cinvoke __getmainargs, [argc], [argv], [env], 0
     cmp [argc], 3
     jne error
-    stdcall inject, [argv]
+    stdcall inject
     invoke ExitProcess, 0
     ret
 endp
