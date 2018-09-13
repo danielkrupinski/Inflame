@@ -17,8 +17,7 @@ error:
 
 proc inject
     mov esi, [argv]
-    add esi, 4
-    invoke GetFullPathNameA, dword [esi], MAX_PATH, dllPath, 0
+    invoke GetFullPathNameA, dword [esi + 4], MAX_PATH, dllPath, 0
     cinvoke strlen, dllPath
     inc eax
     mov [dllPathLength], eax
