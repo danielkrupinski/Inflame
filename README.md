@@ -9,6 +9,14 @@ User-mode Windows DLL injector written in Assembly (FASM)
 
 FASM (flat assembler) for Windows is required to compile Inflame. You can get the latest version [here](https://flatassembler.net/download.php).
 
+### Compilling
+
+1. Copy Inflame.asm to directory where you extracted FASM.
+2. Open cmd.exe there and enter following command:
+```
+fasm Inflame.asm
+```
+
 ## License
 
 > Copyright (c) 2018 Daniel Krupiński
