@@ -30,7 +30,7 @@ proc inject
     mov [allocatedMemory], eax
     invoke WriteProcessMemory, [processHandle], [allocatedMemory], dllPath, [dllPathLength], NULL
     invoke CreateRemoteThread, [processHandle], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, [allocatedMemory], 0, NULL
-    invoke VirtualFreeEx, [processHandle], [allocatedMemory], 0, MEM_RELEASE
+    invoke CloseHandle, [processHandle]
     ret
 endp
 
