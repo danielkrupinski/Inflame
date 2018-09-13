@@ -5,12 +5,14 @@ include 'INCLUDE/win32ax.inc'
 
 section '.text' code executable
 
-main:
+proc main
     cinvoke __getmainargs, argc, argv, env, 0
     cmp [argc], 3
     jne error
     stdcall inject
     invoke ExitProcess, 0
+    ret
+endp
 
 error:
     invoke ExitProcess, 1
