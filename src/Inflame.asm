@@ -1,7 +1,7 @@
 format PE console
 entry main
 
-include 'win32ax.inc'
+include 'INCLUDE/win32ax.inc'
 
 section '.text' code executable
 
