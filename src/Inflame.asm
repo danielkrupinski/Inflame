@@ -42,9 +42,6 @@ endp
 
 section '.data' data readable writable
 
-argc    dd ?
-argv    dd ?
-env     dd ?
 dllPath rb MAX_PATH
 dllPathLength dd ?
 processHandle dd ?
