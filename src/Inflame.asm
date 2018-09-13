@@ -5,17 +5,25 @@ include 'INCLUDE/win32ax.inc'
 
 section '.text' code executable
 
-main:
-    cinvoke __getmainargs, argc, argv, env, 0
+proc main
+    locals
+        argc    dd ?
+        argv    dd ?
+        env     dd ?
+    endl
+
+    cinvoke __getmainargs, [argc], [argv], [env], 0
     cmp [argc], 3
     jne error
     stdcall inject
     invoke ExitProcess, 0
+    ret
+endp
 
 error:
     invoke ExitProcess, 1
 
-proc inject
+proc inject, argv
     mov esi, [argv]
     invoke GetFullPathNameA, dword [esi + 4], MAX_PATH, dllPath, 0
     cinvoke strlen, dllPath
@@ -34,9 +42,6 @@ endp
 
 section '.data' data readable writable
 
-argc    dd ?
-argv    dd ?
-env     dd ?
 dllPath rb MAX_PATH
 dllPathLength dd ?
 processHandle dd ?
