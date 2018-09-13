@@ -6,6 +6,12 @@ include 'INCLUDE/win32ax.inc'
 section '.text' code executable
 
 proc main
+    locals
+        argc    dd ?
+        argv    dd ?
+        env     dd ?
+    endl
+
     cinvoke __getmainargs, argc, argv, env, 0
     cmp [argc], 3
     jne error
