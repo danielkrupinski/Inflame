@@ -1,6 +1,6 @@
 # Inflame
 
-User-mode Windows DLL injector written in Assembly (FASM)
+User-mode Windows DLL injector written in Assembly (FASM) with WINAPI
 
 ## Features
 
