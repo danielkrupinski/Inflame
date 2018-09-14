@@ -6,6 +6,8 @@ User-mode Windows DLL injector written in Assembly (FASM) with WINAPI
 
 - **minimal size:** weighing `2kB`, Inflame is a tiny little injector
 - **lightning fast:** Inflame execution takes less than `25ms`
+- **easy to use:** invoked with commandline options
+
 
 ## Getting Started
 
