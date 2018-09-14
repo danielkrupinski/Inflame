@@ -4,6 +4,13 @@ include 'INCLUDE/win64ax.inc'
 
 section '.data' data readable writable
 
+argc    dd ?
+argv    dd ?
+env     dd ?
+dllPath rb MAX_PATH
+dllPathLength dd ?
+processHandle dd ?
+allocatedMemory dd ?
 
 section '.idata' data readable import
 
