@@ -2,6 +2,9 @@ format PE64 console
 
 include 'INCLUDE/win64ax.inc'
 
+section '.data' data readable writable
+
+
 section '.idata' data readable import
 
 library kernel32, 'kernel32.dll', \
