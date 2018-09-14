@@ -13,6 +13,8 @@ main:
     invoke ExitProcess, 0
 
 error:
+    cinvoke printf, <'Wrong amount of commandline arguments! Press enter to continue...', 0>
+    cinvoke getchar
     invoke ExitProcess, 1
 
 proc inject
