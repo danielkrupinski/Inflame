@@ -1,4 +1,5 @@
 format PE64 console
+entry main
 
 include 'INCLUDE/win64ax.inc'
 
