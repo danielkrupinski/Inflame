@@ -2,6 +2,9 @@ format PE64 console
 
 include 'INCLUDE/win64ax.inc'
 
+section '.text' code executable
+
+
 section '.data' data readable writable
 
 argc    dd ?
