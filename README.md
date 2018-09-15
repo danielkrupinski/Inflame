@@ -37,16 +37,19 @@ fasm Inflame64.asm
 flat assembler  version 1.73.04  (1048576 kilobytes memory)
 3 passes, 1536 bytes.
 ```
-and output executable `Inflame.exe` should exist.
-1. Then run `Inflame.exe` using this syntax:
+and output executable `Inflame.exe` or `Inflame64.exe` should exist.
+1. Then run `Inflame.exe`/`Inflame64.exe` using following syntax:
 ```
-Inflame [path to dll or dll name when in the same folder] [destination process ID]
+Inflame / Inflame64 [path to dll or dll name when in the same folder] [destination process ID]
 ```
 Valid command should look like this one:
 ```
 Inflame test.dll 1024
 ```
-
+or
+```
+Inflame64 test64.dll 2048
+```
 
 ## License
 
