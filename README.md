@@ -22,6 +22,7 @@ Inflame is available in 2 versions:
 * `32-bit` - `Inflame.asm` - for both 32-bit dll and destination process
 * `64-bit` - `Inflame64.asm` - for both 64-bit dll and destination process
 
+
 1. Choose correct Inflame version based on dll and destination process architecture. See above.
 2. Copy chosen `.asm` file to same directory as `FASM.EXE`.
 3. Open cmd.exe there and enter following command:
