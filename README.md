@@ -20,7 +20,7 @@ FASM (flat assembler) for Windows is required to compile Inflame. You can get th
 Inflame is available in 2 versions:
 
 * `32-bit` - for both 32-bit dll and destination process
-
+* `64-bit` - for both 64-bit dll and destination process
 
 1. ---
 2. Open cmd.exe there and enter following command:
