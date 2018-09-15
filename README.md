@@ -23,8 +23,8 @@ Inflame is available in 2 versions:
 * `64-bit` - `Inflame64.asm` - for both 64-bit dll and destination process
 
 1. Choose correct Inflame version based on dll and destination process architecture. See above.
-1. Copy chosen `.asm` file to same directory as `FASM.EXE`.
-1. Open cmd.exe there and enter following command:
+2. Copy chosen `.asm` file to same directory as `FASM.EXE`.
+3. Open cmd.exe there and enter following command:
 ```
 fasm Inflame.asm
 ```
@@ -32,13 +32,13 @@ or
 ```
 fasm Inflame64.asm
 ```
-1. If everything went right you should see output similar to this one:
+4. If everything went right you should see output similar to this one:
 ```
 flat assembler  version 1.73.04  (1048576 kilobytes memory)
 3 passes, 1536 bytes.
 ```
 and output executable `Inflame.exe` or `Inflame64.exe` should exist.
-1. Then run `Inflame.exe`/`Inflame64.exe` using following syntax:
+5. Then run `Inflame.exe`/`Inflame64.exe` using following syntax:
 ```
 Inflame / Inflame64 [path to dll or dll name when in the same folder] [destination process ID]
 ```
