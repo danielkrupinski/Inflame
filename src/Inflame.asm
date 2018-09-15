@@ -1,4 +1,4 @@
-format PE console
+format PE console 6.0
 entry main
 
 include 'INCLUDE/win32ax.inc'
