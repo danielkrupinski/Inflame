@@ -1,4 +1,4 @@
-# Inflame
+# Inflame ![](https://img.shields.io/badge/language-Assembly-%236E4C13.svg)
 
 User-mode Windows DLL injector written in Assembly language ([FASM](https://flatassembler.net) syntax) with WinAPI.
 
