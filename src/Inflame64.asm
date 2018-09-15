@@ -59,3 +59,10 @@ import kernel32, \
        WriteProcessMemory, 'WriteProcessMemory', \
        CreateRemoteThread, 'CreateRemoteThread', \
        CloseHandle, 'CloseHandle'
+
+import msvcrt, \
+       __getmainargs, '__getmainargs', \
+       printf, 'printf', \
+       getchar, 'getchar', \
+       strlen, 'strlen', \
+       atoi, 'atoi'
