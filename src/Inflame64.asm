@@ -18,16 +18,17 @@ error:
     invoke ExitProcess, 1
 
 proc inject
-    mov esi, [argv]
-    invoke GetFullPathNameA, dword [esi + 4], MAX_PATH, dllPath, 0
+    mov rsi, [argv]
+    invoke GetFullPathNameA, qword [rsi + 8], MAX_PATH, dllPath, 0
     cinvoke strlen, dllPath
-    inc eax
-    mov [dllPathLength], eax
-    mov esi, [argv]
-    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_QUERY_INFORMATION + PROCESS_CREATE_THREAD, FALSE, <cinvoke atoi, dword [esi + 8]>
-    mov [processHandle], eax
+    inc rax
+    mov [dllPathLength], rax
+    mov rsi, [argv]
+    cinvoke atoi, qword [esi + 16]
+    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_QUERY_INFORMATION + PROCESS_CREATE_THREAD, FALSE, rax
+    mov [processHandle], rax
     invoke VirtualAllocEx, [processHandle], NULL, [dllPathLength], MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
-    mov [allocatedMemory], eax
+    mov [allocatedMemory], rax
     invoke WriteProcessMemory, [processHandle], [allocatedMemory], dllPath, [dllPathLength], NULL
     invoke CreateRemoteThread, [processHandle], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, [allocatedMemory], 0, NULL
     invoke CloseHandle, [processHandle]
@@ -36,13 +37,13 @@ endp
 
 section '.data' data readable writable
 
-argc    dd ?
-argv    dd ?
-env     dd ?
+argc    dq ?
+argv    dq ?
+env     dq ?
 dllPath rb MAX_PATH
-dllPathLength dd ?
-processHandle dd ?
-allocatedMemory dd ?
+dllPathLength dq ?
+processHandle dq ?
+allocatedMemory dq ?
 
 section '.idata' data readable import
 
