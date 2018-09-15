@@ -17,8 +17,12 @@ FASM (flat assembler) for Windows is required to compile Inflame. You can get th
 
 ### Installing
 
-1. Copy Inflame.asm to directory where you extracted FASM.
+Inflame is available in 2 versions:
 
+* `32-bit` - for both 32-bit dll and destination process
+
+
+1. ---
 2. Open cmd.exe there and enter following command:
 ```
 fasm Inflame.asm
