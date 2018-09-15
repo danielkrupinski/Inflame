@@ -19,10 +19,10 @@ FASM (flat assembler) for Windows is required to compile Inflame. You can get th
 
 Inflame is available in 2 versions:
 
-* `32-bit` - `Inflame.asm` - for both 32-bit dll and destination process
-* `64-bit` - `Inflame64.asm` - for both 64-bit dll and destination process
+* `32-bit` - `Inflame.asm` - for both 32-bit dll and target process
+* `64-bit` - `Inflame64.asm` - for both 64-bit dll and target process
 
-1. Choose correct Inflame version based on dll and destination process architecture. See above.
+1. Choose correct Inflame version based on dll and process architecture. See above.
 2. Copy chosen `.asm` file to same directory as `FASM.EXE`.
 3. Open cmd.exe there and enter following command:
 ```
@@ -44,7 +44,7 @@ and output executable `Inflame.exe` or `Inflame64.exe` should exist.
 
 Run `Inflame.exe`/`Inflame64.exe` using following syntax:
 ```
-Inflame / Inflame64 [path to dll or dll name when in the same folder] [destination process ID]
+Inflame / Inflame64 [path to dll or dll name when in the same folder] [process ID]
 ```
 Valid command should look like this one:
 ```
