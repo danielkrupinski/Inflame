@@ -33,7 +33,7 @@ and output executable `Inflame.exe` should exist.
 
 4. Then run `Inflame.exe` using this syntax:
 ```
-Inflame [path to dll or dll name when in the same folder] [destination process ID (obtained from for example Task Manager)]
+Inflame [path to dll or dll name when in the same folder] [destination process ID]
 ```
 Valid command should look like this one:
 ```
