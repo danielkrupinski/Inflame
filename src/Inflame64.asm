@@ -9,7 +9,7 @@ main:
     cinvoke __getmainargs, argc, argv, env, 0
     cmp [argc], 3
     jne error
-    stdcall inject
+    stdcall injectLoadLibraryA
     invoke ExitProcess, 0
 
 error:
@@ -17,7 +17,7 @@ error:
     cinvoke getchar
     invoke ExitProcess, 1
 
-proc inject
+proc injectLoadLibraryA
     mov rsi, [argv]
     invoke GetFullPathNameA, qword [rsi + 8], MAX_PATH, dllPath, 0
     cinvoke strlen, dllPath
