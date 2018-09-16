@@ -20,6 +20,7 @@ error:
 proc injectLoadLibraryA
     locals
         dllPath rb MAX_PATH
+        dllPathLength dd ?
     endl
 
     mov esi, [argv]
@@ -51,7 +52,6 @@ section '.data' data readable writable
 argc    dd ?
 argv    dd ?
 env     dd ?
-dllPathLength dd ?
 processHandle dd ?
 allocatedMemory dd ?
 
