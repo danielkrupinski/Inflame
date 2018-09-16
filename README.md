@@ -15,6 +15,14 @@ User-mode Windows DLL injector written in Assembly language ([FASM](https://flat
 
 FASM (flat assembler) for Windows is required to compile Inflame. You can get the latest version [here](https://flatassembler.net/download.php).
 
+
+### Clone
+
+Clone this repo to your local machine
+```
+git clone <url>
+```
+
 ### Installing
 
 Inflame is available in 2 versions:
