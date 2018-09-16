@@ -33,10 +33,12 @@ proc injectLoadLibraryA
     mov esi, [argv]
     invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_QUERY_INFORMATION + PROCESS_CREATE_THREAD, FALSE, <cinvoke atoi, dword [esi + 8]>
     mov [processHandle], eax
-    invoke VirtualAllocEx, [processHandle], NULL, [dllPathLength], MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
+    lea eax, [dllPathLength]
+    invoke VirtualAllocEx, [processHandle], NULL, eax, MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
     mov [allocatedMemory], eax
     lea eax, [dllPath]
-    invoke WriteProcessMemory, [processHandle], [allocatedMemory], eax, [dllPathLength], NULL
+    lea ebx, [dllPathLength]
+    invoke WriteProcessMemory, [processHandle], [allocatedMemory], eax, ebx, NULL
     invoke CreateRemoteThread, [processHandle], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, [allocatedMemory], 0, NULL
     invoke CloseHandle, [processHandle]
     ret
