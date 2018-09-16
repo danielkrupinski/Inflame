@@ -35,13 +35,17 @@ proc injectLoadLibraryA
     invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_QUERY_INFORMATION + PROCESS_CREATE_THREAD, FALSE, <cinvoke atoi, dword [esi + 8]>
     mov [processHandle], eax
     lea eax, [dllPathLength]
-    invoke VirtualAllocEx, [processHandle], NULL, eax, MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
+    lea ebx, [processHandle]
+    invoke VirtualAllocEx, dword [ebx], NULL, eax, MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
     mov [allocatedMemory], eax
     lea eax, [dllPath]
     lea ebx, [dllPathLength]
-    invoke WriteProcessMemory, [processHandle], [allocatedMemory], eax, dword [ebx], NULL
-    invoke CreateRemoteThread, [processHandle], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, [allocatedMemory], 0, NULL
-    invoke CloseHandle, [processHandle]
+    lea ecx, [processHandle]
+    invoke WriteProcessMemory, dword [ecx], [allocatedMemory], eax, dword [ebx], NULL
+    lea eax, [processHandle]
+    invoke CreateRemoteThread, dword [eax], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, [allocatedMemory], 0, NULL
+    lea eax, [processHandle]
+    invoke CloseHandle, dword [eax]
     ret
 endp
 
