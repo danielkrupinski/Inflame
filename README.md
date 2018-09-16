@@ -59,4 +59,4 @@ Inflame64 test64.dll 2048
 
 > Copyright (c) 2018 Daniel Krupiński
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the [MIT License](https://opensource.org/licenses/mit-license.php) - see the [LICENSE](LICENSE) file for details.
