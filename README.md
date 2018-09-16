@@ -20,7 +20,7 @@ FASM (flat assembler) for Windows is required to compile Inflame. You can get th
 
 Clone this repo to your local machine
 ```
-git clone <url>
+git clone https://github.com/danielkrupinski/Inflame.git
 ```
 
 ### Installing
