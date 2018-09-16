@@ -24,7 +24,7 @@ proc injectLoadLibraryA
     inc rax
     mov [dllPathLength], rax
     mov rsi, [argv]
-    cinvoke atoi, qword [esi + 16]
+    cinvoke atoi, qword [rsi + 16]
     invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_QUERY_INFORMATION + PROCESS_CREATE_THREAD, FALSE, rax
     mov [processHandle], rax
     invoke VirtualAllocEx, [processHandle], NULL, [dllPathLength], MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
