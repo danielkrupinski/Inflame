@@ -38,7 +38,7 @@ proc injectLoadLibraryA
     mov [allocatedMemory], eax
     lea eax, [dllPath]
     lea ebx, [dllPathLength]
-    invoke WriteProcessMemory, [processHandle], [allocatedMemory], eax, ebx, NULL
+    invoke WriteProcessMemory, [processHandle], [allocatedMemory], eax, dword [ebx], NULL
     invoke CreateRemoteThread, [processHandle], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, [allocatedMemory], 0, NULL
     invoke CloseHandle, [processHandle]
     ret
