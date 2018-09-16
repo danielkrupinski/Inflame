@@ -34,6 +34,11 @@ proc injectLoadLibraryA
     ret
 endp
 
+proc injectManualMap
+
+    ret
+endp
+
 section '.data' data readable writable
 
 argc    dd ?
