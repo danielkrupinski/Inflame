@@ -33,7 +33,7 @@ Inflame is available in 2 versions:
 1. Choose correct Inflame version based on dll and process architecture. See above.
 2. Copy chosen `.asm` file to same directory as `FASM.EXE`.
 3. Open cmd.exe there and enter following command:
-```Batchfile
+```
 fasm Inflame.asm
 ```
 or
