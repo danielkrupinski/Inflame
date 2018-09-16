@@ -21,9 +21,12 @@ proc injectLoadLibraryA
     locals
         dllPath rb MAX_PATH
     endl
+
     mov esi, [argv]
-    invoke GetFullPathNameA, dword [esi + 4], MAX_PATH, dllPath, 0
-    cinvoke strlen, dllPath
+    lea eax, [dllPath]
+    invoke GetFullPathNameA, dword [esi + 4], MAX_PATH, eax, 0
+    lea eax, [dllPath]
+    cinvoke strlen, eax
     inc eax
     mov [dllPathLength], eax
     mov esi, [argv]
@@ -31,7 +34,8 @@ proc injectLoadLibraryA
     mov [processHandle], eax
     invoke VirtualAllocEx, [processHandle], NULL, [dllPathLength], MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
     mov [allocatedMemory], eax
-    invoke WriteProcessMemory, [processHandle], [allocatedMemory], dllPath, [dllPathLength], NULL
+    lea eax, [dllPath]
+    invoke WriteProcessMemory, [processHandle], [allocatedMemory], eax, [dllPathLength], NULL
     invoke CreateRemoteThread, [processHandle], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, [allocatedMemory], 0, NULL
     invoke CloseHandle, [processHandle]
     ret
