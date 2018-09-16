@@ -18,6 +18,9 @@ error:
     invoke ExitProcess, 1
 
 proc injectLoadLibraryA
+    locals
+        dllPath rb MAX_PATH
+    endl
     mov esi, [argv]
     invoke GetFullPathNameA, dword [esi + 4], MAX_PATH, dllPath, 0
     cinvoke strlen, dllPath
@@ -44,7 +47,6 @@ section '.data' data readable writable
 argc    dd ?
 argv    dd ?
 env     dd ?
-dllPath rb MAX_PATH
 dllPathLength dd ?
 processHandle dd ?
 allocatedMemory dd ?
