@@ -21,6 +21,7 @@ proc injectLoadLibraryA
     locals
         dllPath rb MAX_PATH
         dllPathLength dd ?
+        processHandle dd ?
     endl
 
     mov esi, [argv]
@@ -54,7 +55,6 @@ section '.data' data readable writable
 argc    dd ?
 argv    dd ?
 env     dd ?
-processHandle dd ?
 allocatedMemory dd ?
 
 section '.idata' data readable import
