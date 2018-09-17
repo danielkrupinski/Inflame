@@ -44,6 +44,8 @@ or
 ```
 fasm Inflame64.asm
 ```
+![](http://g.recordit.co/zyqawO6UO8.gif)
+
 4. If everything went right you should see output similar to this one:
 ```
 flat assembler  version 1.73.04  (1048576 kilobytes memory)
