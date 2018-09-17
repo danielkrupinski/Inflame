@@ -20,35 +20,36 @@ error:
 proc injectLoadLibraryA
     locals
         dllPath rb MAX_PATH
-        dllPathLength dd ?
-        processHandle dd ?
-        allocatedMemory dd ?
+        dllPathLength dq ?
+        processHandle dq ?
+        allocatedMemory dq ?
     endl
 
-    mov esi, [argv]
-    lea eax, [dllPath]
-    invoke GetFullPathNameA, dword [esi + 4], MAX_PATH, eax, 0
-    lea eax, [dllPath]
-    cinvoke strlen, eax
-    inc eax
-    mov [dllPathLength], eax
-    mov esi, [argv]
-    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_QUERY_INFORMATION + PROCESS_CREATE_THREAD, FALSE, <cinvoke atoi, dword [esi + 8]>
-    mov [processHandle], eax
-    lea eax, [dllPathLength]
-    lea ebx, [processHandle]
-    invoke VirtualAllocEx, dword [ebx], NULL, eax, MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
-    mov [allocatedMemory], eax
-    lea eax, [dllPath]
-    lea ebx, [dllPathLength]
-    lea ecx, [processHandle]
-    lea edx, [allocatedMemory]
-    invoke WriteProcessMemory, dword [ecx], dword [edx], eax, dword [ebx], NULL
-    lea ebx, [processHandle]
-    lea esi, [allocatedMemory]
-    invoke CreateRemoteThread, dword [ebx], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, dword [esi], 0, NULL
-    lea eax, [processHandle]
-    invoke CloseHandle, dword [eax]
+    mov rsi, [argv]
+    lea rax, [dllPath]
+    invoke GetFullPathNameA, qword [rsi + 8], MAX_PATH, rax, 0
+    lea rax, [dllPath]
+    cinvoke strlen, rax
+    inc rax
+    mov [dllPathLength], rax
+    mov rsi, [argv]
+    cinvoke atoi, qword [rsi + 16]
+    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_QUERY_INFORMATION + PROCESS_CREATE_THREAD, FALSE, eax
+    mov [processHandle], rax
+    lea rax, [dllPathLength]
+    lea rbx, [processHandle]
+    invoke VirtualAllocEx, qword [rbx], NULL, rax, MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
+    mov [allocatedMemory], rax
+    lea rax, [dllPath]
+    lea rbx, [dllPathLength]
+    lea rcx, [processHandle]
+    lea rdx, [allocatedMemory]
+    invoke WriteProcessMemory, qword [rcx], qword [rdx], rax, qword [rbx], NULL
+    lea rbx, [processHandle]
+    lea rsi, [allocatedMemory]
+    invoke CreateRemoteThread, qword [rbx], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, qword [rsi], 0, NULL
+    lea rax, [processHandle]
+    invoke CloseHandle, qword [rax]
     ret
 endp
 
@@ -59,9 +60,9 @@ endp
 
 section '.data' data readable writable
 
-argc    dd ?
-argv    dd ?
-env     dd ?
+argc    dq ?
+argv    dq ?
+env     dq ?
 
 section '.idata' data readable import
 
