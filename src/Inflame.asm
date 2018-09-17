@@ -57,7 +57,7 @@ proc injectManualMap
     ret
 endp
 
-section '.data' data readable writable
+section '.bss' data readable writable
 
 argc    dd ?
 argv    dd ?
