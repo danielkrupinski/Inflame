@@ -1,4 +1,4 @@
-# Inflame ![](https://img.shields.io/badge/language-Assembly-%236E4C13.svg) ![](https://img.shields.io/badge/assembler-FASM-lightgrey.svg) ![](https://img.shields.io/badge/fasm-1.73.04-orange.svg) ![](https://img.shields.io/badge/platform-Windows-0078d7.svg) ![](https://img.shields.io/badge/arch-x86-yellow.svg) ![](https://img.shields.io/badge/license-MIT-blue.svg)
+# Inflame ![](https://img.shields.io/badge/language-Assembly-%236E4C13.svg) ![](https://img.shields.io/badge/assembler-FASM-lightgrey.svg) ![](https://img.shields.io/badge/fasm-1.73.04-orange.svg) ![](https://img.shields.io/badge/platform-Windows-0078d7.svg) ![](https://img.shields.io/badge/arch-x86-yellow.svg) ![](https://img.shields.io/badge/arch-x86--64-red.svg) ![](https://img.shields.io/badge/license-MIT-blue.svg)
 
 User-mode Windows DLL injector written in Assembly language ([FASM](https://flatassembler.net) syntax) with [WinAPI](https://docs.microsoft.com/en-us/windows/desktop/apiindex/windows-api-list).
 
