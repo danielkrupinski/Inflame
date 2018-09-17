@@ -42,13 +42,9 @@ endp
 
 section '.data' data readable writable
 
-argc    dq ?
-argv    dq ?
-env     dq ?
-dllPath rb MAX_PATH
-dllPathLength dq ?
-processHandle dq ?
-allocatedMemory dq ?
+argc    dd ?
+argv    dd ?
+env     dd ?
 
 section '.idata' data readable import
 
