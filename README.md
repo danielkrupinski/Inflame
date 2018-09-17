@@ -64,7 +64,7 @@ or
 Inflame64 test64.dll 2048
 ```
 
-## License ![](https://img.shields.io/badge/license-MIT-blue.svg)
+## License
 
 > Copyright (c) 2018 Daniel Krupiński
 
