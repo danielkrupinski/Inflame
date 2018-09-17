@@ -18,20 +18,37 @@ error:
     invoke ExitProcess, 1
 
 proc injectLoadLibraryA
-    mov rsi, [argv]
-    invoke GetFullPathNameA, qword [rsi + 8], MAX_PATH, dllPath, 0
-    cinvoke strlen, dllPath
-    inc rax
-    mov [dllPathLength], rax
-    mov rsi, [argv]
-    cinvoke atoi, qword [rsi + 16]
-    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_QUERY_INFORMATION + PROCESS_CREATE_THREAD, FALSE, rax
-    mov [processHandle], rax
-    invoke VirtualAllocEx, [processHandle], NULL, [dllPathLength], MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
-    mov [allocatedMemory], rax
-    invoke WriteProcessMemory, [processHandle], [allocatedMemory], dllPath, [dllPathLength], NULL
-    invoke CreateRemoteThread, [processHandle], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, [allocatedMemory], 0, NULL
-    invoke CloseHandle, [processHandle]
+    locals
+        dllPath rb MAX_PATH
+        dllPathLength dd ?
+        processHandle dd ?
+        allocatedMemory dd ?
+    endl
+
+    mov esi, [argv]
+    lea eax, [dllPath]
+    invoke GetFullPathNameA, dword [esi + 4], MAX_PATH, eax, 0
+    lea eax, [dllPath]
+    cinvoke strlen, eax
+    inc eax
+    mov [dllPathLength], eax
+    mov esi, [argv]
+    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_QUERY_INFORMATION + PROCESS_CREATE_THREAD, FALSE, <cinvoke atoi, dword [esi + 8]>
+    mov [processHandle], eax
+    lea eax, [dllPathLength]
+    lea ebx, [processHandle]
+    invoke VirtualAllocEx, dword [ebx], NULL, eax, MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
+    mov [allocatedMemory], eax
+    lea eax, [dllPath]
+    lea ebx, [dllPathLength]
+    lea ecx, [processHandle]
+    lea edx, [allocatedMemory]
+    invoke WriteProcessMemory, dword [ecx], dword [edx], eax, dword [ebx], NULL
+    lea ebx, [processHandle]
+    lea esi, [allocatedMemory]
+    invoke CreateRemoteThread, dword [ebx], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, dword [esi], 0, NULL
+    lea eax, [processHandle]
+    invoke CloseHandle, dword [eax]
     ret
 endp
 
