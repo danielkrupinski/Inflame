@@ -33,7 +33,7 @@ proc injectLoadLibraryA
     inc eax
     mov [dllPathLength], eax
     mov esi, [argv]
-    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_QUERY_INFORMATION + PROCESS_CREATE_THREAD, FALSE, <cinvoke atoi, dword [esi + 8]>
+    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, <cinvoke atoi, dword [esi + 8]>
     mov [processHandle], eax
     lea eax, [dllPathLength]
     lea ebx, [processHandle]
