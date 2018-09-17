@@ -37,6 +37,7 @@ Inflame is available in 2 versions:
 ```
 fasm Inflame.asm
 ```
+![](http://g.recordit.co/H6Hy7QYMFA.gif)
 or
 ```
 fasm Inflame64.asm
