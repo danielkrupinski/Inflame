@@ -75,6 +75,9 @@ proc injectManualMap
     invoke ReadFile, eax, ebx, ecx, edx, NULL
     lea eax, [dllHandle]
     invoke CloseHandle, eax
+    mov eax, [allocatedMemory]
+    add eax, dword [allocatedMemory + 60]
+    mov [dllPEHeader], eax
     ret
 endp
 
