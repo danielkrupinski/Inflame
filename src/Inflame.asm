@@ -88,7 +88,8 @@ import kernel32, \
        CreateRemoteThread, 'CreateRemoteThread', \
        CloseHandle, 'CloseHandle', \
        CreateFileA, 'CreateFileA', \
-       GetFileSize, 'GetFileSize'
+       GetFileSize, 'GetFileSize', \
+       VirtualAlloc, 'VirtualAlloc'
 
 import msvcrt, \
        __getmainargs, '__getmainargs', \
