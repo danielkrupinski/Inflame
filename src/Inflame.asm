@@ -55,6 +55,7 @@ endp
 proc injectManualMap
     locals
         dllHandle dd ?
+        dllSize dd ?
     endl
 
     mov esi, [argv]
