@@ -58,6 +58,7 @@ proc injectManualMap
         dllSize dd ?
         allocatedMemory dd ?
         readBytes dd ?
+        dllPEHeader dd ?
     endl
 
     mov esi, [argv]
