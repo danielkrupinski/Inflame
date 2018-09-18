@@ -61,6 +61,8 @@ proc injectManualMap
     mov esi, [argv]
     invoke CreateFileA, dword [esi + 4], GENERIC_READ, FILE_SHARE_READ + FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL
     mov [dllHandle], eax
+    invoke GetFileSize, eax, NULL
+    mov [dllSize], eax
     ret
 endp
 
