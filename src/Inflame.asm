@@ -84,7 +84,8 @@ import kernel32, \
        WriteProcessMemory, 'WriteProcessMemory', \
        CreateRemoteThread, 'CreateRemoteThread', \
        CloseHandle, 'CloseHandle', \
-       CreateFileA, 'CreateFileA'
+       CreateFileA, 'CreateFileA', \
+       GetFileSize, 'GetFileSize'
 
 import msvcrt, \
        __getmainargs, '__getmainargs', \
