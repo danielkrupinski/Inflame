@@ -70,7 +70,10 @@ proc injectManualMap
     lea eax, [dllHandle]
     lea ebx, [allocatedMemory]
     lea ecx, [dllSize]
-    invoke ReadFile, eax, ebx, ecx, &readBytes, NULL)
+    lea edx, [readBytes]
+    invoke ReadFile, eax, ebx, ecx, edx, NULL
+    lea eax, [dllHandle]
+    invoke CloseHandle, eax
     ret
 endp
 
