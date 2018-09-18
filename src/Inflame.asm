@@ -65,6 +65,7 @@ proc injectManualMap
     invoke GetFileSize, eax, NULL
     mov [dllSize], eax
     invoke VirtualAlloc, NULL, eax, MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
+    mov [allocatedMemory], eax
     ret
 endp
 
