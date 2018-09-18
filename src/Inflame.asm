@@ -53,7 +53,9 @@ proc injectLoadLibraryA
 endp
 
 proc injectManualMap
-
+    locals
+        dllHandle dd ?
+    endl
     ret
 endp
 
