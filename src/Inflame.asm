@@ -92,7 +92,8 @@ import kernel32, \
        CloseHandle, 'CloseHandle', \
        CreateFileA, 'CreateFileA', \
        GetFileSize, 'GetFileSize', \
-       VirtualAlloc, 'VirtualAlloc'
+       VirtualAlloc, 'VirtualAlloc', \
+       ReadFile, 'ReadFile'
 
 import msvcrt, \
        __getmainargs, '__getmainargs', \
