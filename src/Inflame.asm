@@ -56,6 +56,10 @@ proc injectManualMap
     locals
         dllHandle dd ?
     endl
+
+    mov esi, [argv]
+    invoke CreateFileA, dword [esi + 4], GENERIC_READ, FILE_SHARE_READ + FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL
+    mov [dllHandle], eax
     ret
 endp
 
