@@ -56,6 +56,7 @@ proc injectManualMap
     locals
         dllHandle dd ?
         dllSize dd ?
+        allocatedMemory dd ?
     endl
 
     mov esi, [argv]
