@@ -38,9 +38,8 @@ struct IMAGE_OPTIONAL_HEADER32
     .SizeOfHeapReserve             dd  ?
     .SizeOfHeapCommit              dd  ?
     .LoaderFlags                   dd  ?
-    .NumberOfDirectories           dd  ?
-    .DataDirectory                IMAGE_DATA_DIRECTORY
-    .Directories          rb IMAGE_DATA_DIRECTORY*15
+    .NumberOfRvaAndSizes           dd  ?
+    .DataDirectory                 rb (sizeof.IMAGE_DATA_DIRECTORY * 16)
 ends
 
 struct IMAGE_FILE_HEADER
