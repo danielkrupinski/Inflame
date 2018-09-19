@@ -3,14 +3,12 @@ entry main
 
 include 'INCLUDE/win32ax.inc'
 
-struc IMAGE_DATA_DIRECTORY
-{
+struct IMAGE_DATA_DIRECTORY
     .VirtualAddress dd  ?
     .isize          dd  ?
-}
+ends
 
-struc IMAGE_OPTIONAL_HEADER32
-{
+struct IMAGE_OPTIONAL_HEADER32
     .Magic                         dw  ?
     .MajorLinkerVersion            db  ?
     .MinorLinkerVersion            db  ?
@@ -43,10 +41,9 @@ struc IMAGE_OPTIONAL_HEADER32
     .NumberOfDirectories           dd  ?
     .DataDirectory                IMAGE_DATA_DIRECTORY
     .Directories          rb IMAGE_DATA_DIRECTORY*15
-}
+ends
 
-struc IMAGE_FILE_HEADER
-{
+struct IMAGE_FILE_HEADER
     .Machine               dw ?
     .NumberOfSections      dw ?
     .TimeDateStamp         dd ?
@@ -54,17 +51,15 @@ struc IMAGE_FILE_HEADER
     .NumberOfSymbols       dd ?
     .SizeOfOptionalHeader  dw ?
     .Characteristics       dw ?
-}
+ends
 
-struc IMAGE_NT_HEADERS
-{
+struct IMAGE_NT_HEADERS
     .Signature         dd ?
     .FileHeader        IMAGE_FILE_HEADER
     .OptionalHeader    IMAGE_OPTIONAL_HEADER32
-}
+ends
 
-struc IMAGE_EXPORT_DIRECTORY
-{
+struct IMAGE_EXPORT_DIRECTORY
     .Characteristics       dd  ?
     .TimeDateStamp         dd  ?
     .MajorVersion          dw  ?
@@ -76,10 +71,9 @@ struc IMAGE_EXPORT_DIRECTORY
     .AddressOfFunctions    dd  ?
     .AddressOfNames        dd  ?
     .AddressOfNameOrdinals dd  ?
-}
+ends
 
-struc IMAGE_DOS_HEADER
-{
+struct IMAGE_DOS_HEADER
     .e_magic           dw ?
     .e_cblp            dw ?
     .e_cp              dw ?
@@ -99,10 +93,9 @@ struc IMAGE_DOS_HEADER
     .e_oeminfo         dw ?
     .e_res2            rw 10
     .e_lfanew          dd ?
-}
+ends
 
-struc IMAGE_SECTION_HEADER
-{
+struct IMAGE_SECTION_HEADER
     .Name                 rb 8
     .VirtualSize          dd ?
     .VirtualAddress       dd ?
@@ -113,7 +106,7 @@ struc IMAGE_SECTION_HEADER
     .NumberOfRelocations  dw ?
     .NumberOfLinenumbers  dw ?
     .Characteristics      dd ?
-}
+ends
 
 section '.text' code executable
 
