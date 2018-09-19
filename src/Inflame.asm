@@ -171,7 +171,6 @@ proc injectManualMap
         allocatedMemory dd ?
         allocatedMemoryEx dd ?
         readBytes dd ?
-        dllNTHeaders dd ?
         processID dd ?
         processHandle dd ?
         dllSectionHeader dd ?
@@ -191,9 +190,15 @@ proc injectManualMap
     invoke ReadFile, eax, ebx, ecx, edx, NULL
     lea eax, [dllHandle]
     invoke CloseHandle, eax
-    mov eax, [allocatedMemory]
-    add eax, dword [allocatedMemory + 60]
-    mov [dllPEHeader], eax
+
+    virtual at allocatedMemory
+        dllDOSHeader IMAGE_DOS_HEADER
+    end virtual
+
+    virtual at allocatedMemory + dllDOSHeader.e_lfanew
+        dllNTHeaders IMAGE_NT_HEADERS
+    end virtual
+
     mov esi, [argv]
     cinvoke atoi, dword [esi + 8]
     mov [processID], eax
