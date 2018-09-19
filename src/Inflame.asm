@@ -9,7 +9,8 @@ main:
     cinvoke __getmainargs, argc, argv, env, 0
     cmp [argc], 3
     jne error
-    stdcall injectLoadLibraryA
+    ;stdcall injectLoadLibraryA
+    stdcall injectManualMap
     invoke ExitProcess, 0
 
 error:
@@ -60,6 +61,7 @@ proc injectManualMap
         readBytes dd ?
         dllPEHeader dd ?
         processID dd ?
+        processHandle dd ?
     endl
 
     mov esi, [argv]
@@ -83,6 +85,10 @@ proc injectManualMap
     cinvoke atoi, dword [esi + 8]
     mov [processID], eax
     invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, eax
+    add [dllPEHeader], 20
+    add [dllPEHeader], 56
+    lea eax, []
+    invoke VirtualAllocEx, hProcess, NULL, pINH->OptionalHeader.SizeOfImage, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
     ret
 endp
 
