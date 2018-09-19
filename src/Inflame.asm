@@ -210,6 +210,11 @@ proc injectManualMap
     lea ebx, [processHandle]
     lea ecx, [allocatedMemory]
     invoke WriteProcessMemory, dword [ebx], dword [eax], dword [ecx], dllNTHeaders.OptionalHeader.SizeOfHeaders, NULL
+
+    virtual at dllNTHeaders + 1
+        dllSectionHeader IMAGE_SECTION_HEADER
+    end virtual
+
     ret
 endp
 
