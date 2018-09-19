@@ -88,8 +88,9 @@ proc injectManualMap
     mov [processHandle], eax
     add [dllPEHeader], 20
     add [dllPEHeader], 56
-    lea eax, []
-    invoke VirtualAllocEx, hProcess, NULL, pINH->OptionalHeader.SizeOfImage, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+    lea eax, [processHandle]
+    lea ebx, [dllPEHeader]
+    invoke VirtualAllocEx, dword [eax], NULL, dword [ebx], MEM_COMMIT + MEM_RESERVE, PAGE_EXECUTE_READWRITE
     ret
 endp
 
