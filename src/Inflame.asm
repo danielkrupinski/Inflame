@@ -204,21 +204,12 @@ proc injectManualMap
     mov [processID], eax
     invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, eax
     mov [processHandle], eax
-    add [dllPEHeader], 20
-    add [dllPEHeader], 56
     lea eax, [processHandle]
-    lea ebx, [dllPEHeader]
-    invoke VirtualAllocEx, dword [eax], NULL, dword [ebx], MEM_COMMIT + MEM_RESERVE, PAGE_EXECUTE_READWRITE
+    invoke VirtualAllocEx, dword [eax], NULL, dllNTHeaders.OptionalHeader.SizeOfImage, MEM_COMMIT + MEM_RESERVE, PAGE_EXECUTE_READWRITE
     mov [allocatedMemoryEx], eax
-    add [dllPEHeader], 4
     lea ebx, [processHandle]
     lea ecx, [allocatedMemory]
-    lea edx, [dllPEHeader]
-    invoke WriteProcessMemory, dword [ebx], dword [eax], dword [ecx], dword [edx], NULL
-    mov eax, [allocatedMemory]
-    add eax, dword [allocatedMemory + 60]
-    mov [dllSectionHeader], eax
-    inc [dllSectionHeader]
+    invoke WriteProcessMemory, dword [ebx], dword [eax], dword [ecx], dllNTHeaders.OptionalHeader.SizeOfHeaders, NULL
     ret
 endp
 
