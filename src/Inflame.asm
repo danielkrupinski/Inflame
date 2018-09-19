@@ -82,6 +82,7 @@ proc injectManualMap
     mov esi, [argv]
     cinvoke atoi, dword [esi + 8]
     mov [processID], eax
+    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, eax
     ret
 endp
 
