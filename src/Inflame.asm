@@ -92,6 +92,7 @@ proc injectManualMap
     lea eax, [processHandle]
     lea ebx, [dllPEHeader]
     invoke VirtualAllocEx, dword [eax], NULL, dword [ebx], MEM_COMMIT + MEM_RESERVE, PAGE_EXECUTE_READWRITE
+    mov [allocatedMemoryEx], eax
     ret
 endp
 
