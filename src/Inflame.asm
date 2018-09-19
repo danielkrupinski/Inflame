@@ -63,6 +63,7 @@ proc injectManualMap
         dllPEHeader dd ?
         processID dd ?
         processHandle dd ?
+        dllSectionHeader dd ?
     endl
 
     mov esi, [argv]
