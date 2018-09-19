@@ -171,7 +171,7 @@ proc injectManualMap
         allocatedMemory dd ?
         allocatedMemoryEx dd ?
         readBytes dd ?
-        dllPEHeader dd ?
+        dllNTHeaders dd ?
         processID dd ?
         processHandle dd ?
         dllSectionHeader dd ?
