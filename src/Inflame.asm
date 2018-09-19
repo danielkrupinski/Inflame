@@ -23,6 +23,7 @@ proc injectLoadLibraryA
         dllPathLength dd ?
         processHandle dd ?
         allocatedMemory dd ?
+        processID dd ?
     endl
 
     mov esi, [argv]
