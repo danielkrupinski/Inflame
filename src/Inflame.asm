@@ -165,7 +165,6 @@ proc injectManualMap
         readBytes dd ?
         processID dd ?
         processHandle dd ?
-        dllSectionHeader dd ?
     endl
 
     mov esi, [argv]
