@@ -58,6 +58,7 @@ proc injectManualMap
         dllHandle dd ?
         dllSize dd ?
         allocatedMemory dd ?
+        allocatedMemoryEx dd ?
         readBytes dd ?
         dllPEHeader dd ?
         processID dd ?
