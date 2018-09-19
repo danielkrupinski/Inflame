@@ -99,6 +99,10 @@ proc injectManualMap
     lea ecx, [allocatedMemory]
     lea edx, [dllPEHeader]
     invoke WriteProcessMemory, dword [ebx], dword [eax], dword [ecx], dword [edx], NULL
+    mov eax, [allocatedMemory]
+    add eax, dword [allocatedMemory + 60]
+    mov [dllSectionHeader], eax
+    inc [dllSectionHeader]
     ret
 endp
 
