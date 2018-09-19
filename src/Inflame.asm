@@ -23,7 +23,6 @@ proc injectLoadLibraryA
         dllPathLength dd ?
         processHandle dd ?
         allocatedMemory dd ?
-        processID dd ?
     endl
 
     mov esi, [argv]
@@ -60,6 +59,7 @@ proc injectManualMap
         allocatedMemory dd ?
         readBytes dd ?
         dllPEHeader dd ?
+        processID dd ?
     endl
 
     mov esi, [argv]
