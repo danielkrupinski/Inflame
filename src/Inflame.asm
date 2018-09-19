@@ -85,6 +85,7 @@ proc injectManualMap
     cinvoke atoi, dword [esi + 8]
     mov [processID], eax
     invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, eax
+    mov [processHandle], eax
     add [dllPEHeader], 20
     add [dllPEHeader], 56
     lea eax, []
