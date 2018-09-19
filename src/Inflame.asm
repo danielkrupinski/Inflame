@@ -79,6 +79,9 @@ proc injectManualMap
     mov eax, [allocatedMemory]
     add eax, dword [allocatedMemory + 60]
     mov [dllPEHeader], eax
+    mov esi, [argv]
+    cinvoke atoi, dword [esi + 8]
+    mov [processID], eax
     ret
 endp
 
