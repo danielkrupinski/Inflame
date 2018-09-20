@@ -186,7 +186,7 @@ proc injectManualMap
         dllDOSHeader IMAGE_DOS_HEADER
     end virtual
 
-    virtual at allocatedMemory + dllDOSHeader.e_lfanew
+    virtual at allocatedMemory + IMAGE_DOS_HEADER.e_lfanew
         dllNTHeaders IMAGE_NT_HEADERS
     end virtual
 
