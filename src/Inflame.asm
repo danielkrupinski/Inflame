@@ -206,6 +206,16 @@ proc injectManualMap
         dllSectionHeader IMAGE_SECTION_HEADER
     end virtual
 
+    xor ecx, ecx
+    loop1:
+        virtual at dllSectionHeader + (sizeof.IMAGE_SECTION_HEADER * ecx)
+            sectionHeader
+        end virtual
+
+        lea eax, [processHandle]
+        lea ebx, [allocatedMemory]
+        invoke WriteProcessMemory, dword [eax], dword [eax], dword [ecx], dllNTHeaders.OptionalHeader.SizeOfHeaders, NULL
+
     ret
 endp
 
