@@ -209,13 +209,18 @@ proc injectManualMap
     xor ecx, ecx
     loop1:
         virtual at dllSectionHeader + (sizeof.IMAGE_SECTION_HEADER * ecx)
-            sectionHeader
+            sectionHeader IMAGE_SECTION_HEADER
         end virtual
 
         lea eax, [processHandle]
-        lea ebx, [allocatedMemory]
-        invoke WriteProcessMemory, dword [eax], dword [eax], dword [ecx], dllNTHeaders.OptionalHeader.SizeOfHeaders, NULL
-
+        lea ebx, [allocatedMemoryEx]
+        lea edx, [allocatedMemory]
+        push ecx
+        invoke WriteProcessMemory, dword [eax], dword [ebx + sectionHeader.VirtualAddress], dword [edx + sectionHeader.OffsetToRawData], sectionHeader.SizeOfRawData, NULL
+        pop ecx
+        inc ecx
+        cmp ecx, [dllNTHeaders.FileHeader.NumberOfSections]
+        jl loop1
     ret
 endp
 
