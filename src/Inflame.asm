@@ -107,6 +107,15 @@ struct IMAGE_SECTION_HEADER
     .Characteristics      dd ?
 ends
 
+struct LoaderData
+    .ImageBase dd ?
+	.NtHeaders dd ?
+	.BaseRelocation dd ?
+	.ImportDirectory dd ?
+	.LoadLibraryA dd ?
+	.GetProcAddress dd ?
+ends
+
 section '.text' code executable
 
 main:
