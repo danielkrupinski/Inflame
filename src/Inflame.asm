@@ -223,7 +223,9 @@ proc injectManualMap
         cmp ecx, [dllNTHeaders.FileHeader.NumberOfSections]
         jl loop1
 
-
+    lea eax, [processHandle]
+    invoke VirtualAllocEx, dword [eax], NULL, 4096, MEM_COMMIT + MEM_RESERVE, PAGE_EXECUTE_READWRITE
+    mov [loaderMemory], eax
     ret
 endp
 
