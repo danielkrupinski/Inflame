@@ -10,11 +10,16 @@ main:
     cmp [argc], 4
     jne error
     mov esi, [argv]
-    cinvoke atoi, dword [esi + 4]
-    cmp eax, 1
-    je loadlibrary
-    cmp eax, 2
-    je manualmap
+    cinvoke strcmp, dword [esi + 4], <'-loadlibrary', 0>
+    .if eax, e, 0
+        stdcall injectLoadLibraryA
+    .else
+        mov esi, [argv]
+        cinvoke strcmp, dword [esi + 4], <'-manual-map', 0>
+        .if eax, e, 0
+            stdcall injectManualMap
+        .endif
+    .endif
     invoke ExitProcess, 0
 
 loadlibrary:
