@@ -9,7 +9,7 @@ main:
     cinvoke __getmainargs, argc, argv, env, 0
     cmp [argc], 3
     jne error
-    stdcall injectManualMap
+    stdcall injectLoadLibraryA
     invoke ExitProcess, 0
 
 error:
