@@ -6,4 +6,4 @@
 #define INFLAME_API __declspec(dllimport)
 #endif
 
-void manualMap(char* dllName, int PID);
+extern "C" INFLAME_API void manualMap(char* dllName, int PID);
