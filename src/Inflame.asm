@@ -14,7 +14,7 @@ main:
     cmp eax, 1
     je loadlibrary
     cmp eax, 2
-    je loadmanualmap
+    je manualmap
     invoke ExitProcess, 0
 
 loadlibrary:
@@ -38,13 +38,13 @@ proc injectLoadLibraryA
 
     mov esi, [argv]
     lea eax, [dllPath]
-    invoke GetFullPathNameA, dword [esi + 4], MAX_PATH, eax, 0
+    invoke GetFullPathNameA, dword [esi + 8], MAX_PATH, eax, 0
     lea eax, [dllPath]
     cinvoke strlen, eax
     inc eax
     mov [dllPathLength], eax
     mov esi, [argv]
-    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, <cinvoke atoi, dword [esi + 8]>
+    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, <cinvoke atoi, dword [esi + 12]>
     mov [processHandle], eax
     lea eax, [dllPathLength]
     lea ebx, [processHandle]
@@ -65,9 +65,9 @@ endp
 
 proc injectManualMap
     mov esi, [argv]
-    cinvoke atoi, dword [esi + 8]
+    cinvoke atoi, dword [esi + 12]
     mov esi, [argv]
-    cinvoke manualMap, dword [esi + 4], eax
+    cinvoke manualMap, dword [esi + 8], eax
     ret
 endp
 
