@@ -4,116 +4,116 @@ entry main
 include 'INCLUDE/win32ax.inc'
 
 struct IMAGE_DATA_DIRECTORY
-    .VirtualAddress dd  ?
-    .isize          dd  ?
+    VirtualAddress dd  ?
+    isize          dd  ?
 ends
 
 struct IMAGE_OPTIONAL_HEADER32
-    .Magic                         dw  ?
-    .MajorLinkerVersion            db  ?
-    .MinorLinkerVersion            db  ?
-    .SizeOfCode                    dd  ?
-    .SizeOfInitializedData         dd  ?
-    .SizeOfUninitializedData       dd  ?
-    .AddressOfEntryPoint           dd  ?
-    .BaseOfCode                    dd  ?
-    .BaseOfData                    dd  ?
-    .ImageBase                     dd  ?
-    .SectionAlignment              dd  ?
-    .FileAlignment                 dd  ?
-    .MajorOperatingSystemVersion   dw  ?
-    .MinorOperatingSystemVersion   dw  ?
-    .MajorImageVersion             dw  ?
-    .MinorImageVersion             dw  ?
-    .MajorSubsystemVersion         dw  ?
-    .MinorSubsystemVersion         dw  ?
-    .Win32VersionValue             dd  ?
-    .SizeOfImage                   dd  ?
-    .SizeOfHeaders                 dd  ?
-    .CheckSum                      dd  ?
-    .Subsystem                     dw  ?
-    .DllCharacteristics            dw  ?
-    .SizeOfStackReserve            dd  ?
-    .SizeOfStackCommit             dd  ?
-    .SizeOfHeapReserve             dd  ?
-    .SizeOfHeapCommit              dd  ?
-    .LoaderFlags                   dd  ?
-    .NumberOfRvaAndSizes           dd  ?
-    .DataDirectory                 rb (sizeof.IMAGE_DATA_DIRECTORY * 16)
+    Magic                         dw  ?
+    MajorLinkerVersion            db  ?
+    MinorLinkerVersion            db  ?
+    SizeOfCode                    dd  ?
+    SizeOfInitializedData         dd  ?
+    SizeOfUninitializedData       dd  ?
+    AddressOfEntryPoint           dd  ?
+    BaseOfCode                    dd  ?
+    BaseOfData                    dd  ?
+    ImageBase                     dd  ?
+    SectionAlignment              dd  ?
+    FileAlignment                 dd  ?
+    MajorOperatingSystemVersion   dw  ?
+    MinorOperatingSystemVersion   dw  ?
+    MajorImageVersion             dw  ?
+    MinorImageVersion             dw  ?
+    MajorSubsystemVersion         dw  ?
+    MinorSubsystemVersion         dw  ?
+    Win32VersionValue             dd  ?
+    SizeOfImage                   dd  ?
+    SizeOfHeaders                 dd  ?
+    CheckSum                      dd  ?
+    Subsystem                     dw  ?
+    DllCharacteristics            dw  ?
+    SizeOfStackReserve            dd  ?
+    SizeOfStackCommit             dd  ?
+    SizeOfHeapReserve             dd  ?
+    SizeOfHeapCommit              dd  ?
+    LoaderFlags                   dd  ?
+    NumberOfRvaAndSizes           dd  ?
+    DataDirectory                 rb (sizeofIMAGE_DATA_DIRECTORY * 16)
 ends
 
 struct IMAGE_FILE_HEADER
-    .Machine               dw ?
-    .NumberOfSections      dw ?
-    .TimeDateStamp         dd ?
-    .PointerToSymbolTable  dd ?
-    .NumberOfSymbols       dd ?
-    .SizeOfOptionalHeader  dw ?
-    .Characteristics       dw ?
+    Machine               dw ?
+    NumberOfSections      dw ?
+    TimeDateStamp         dd ?
+    PointerToSymbolTable  dd ?
+    NumberOfSymbols       dd ?
+    SizeOfOptionalHeader  dw ?
+    Characteristics       dw ?
 ends
 
 struct IMAGE_NT_HEADERS
-    .Signature         dd ?
-    .FileHeader        IMAGE_FILE_HEADER
-    .OptionalHeader    IMAGE_OPTIONAL_HEADER32
+    Signature         dd ?
+    FileHeader        IMAGE_FILE_HEADER
+    OptionalHeader    IMAGE_OPTIONAL_HEADER32
 ends
 
 struct IMAGE_EXPORT_DIRECTORY
-    .Characteristics       dd  ?
-    .TimeDateStamp         dd  ?
-    .MajorVersion          dw  ?
-    .MinorVersion          dw  ?
-    .nName                 dd  ?
-    .nBase                 dd  ?
-    .NumberOfFunctions     dd  ?
-    .NumberOfNames         dd  ?
-    .AddressOfFunctions    dd  ?
-    .AddressOfNames        dd  ?
-    .AddressOfNameOrdinals dd  ?
+    Characteristics       dd  ?
+    TimeDateStamp         dd  ?
+    MajorVersion          dw  ?
+    MinorVersion          dw  ?
+    nName                 dd  ?
+    nBase                 dd  ?
+    NumberOfFunctions     dd  ?
+    NumberOfNames         dd  ?
+    AddressOfFunctions    dd  ?
+    AddressOfNames        dd  ?
+    AddressOfNameOrdinals dd  ?
 ends
 
 struct IMAGE_DOS_HEADER
-    .e_magic           dw ?
-    .e_cblp            dw ?
-    .e_cp              dw ?
-    .e_crlc            dw ?
-    .e_cparhdr         dw ?
-    .e_minalloc        dw ?
-    .e_maxalloc        dw ?
-    .e_ss              dw ?
-    .e_sp              dw ?
-    .e_csum            dw ?
-    .e_ip              dw ?
-    .e_cs              dw ?
-    .e_lfarlc          dw ?
-    .e_ovno            dw ?
-    .e_res             rw 4
-    .e_oemid           dw ?
-    .e_oeminfo         dw ?
-    .e_res2            rw 10
-    .e_lfanew          dd ?
+    e_magic           dw ?
+    e_cblp            dw ?
+    e_cp              dw ?
+    e_crlc            dw ?
+    e_cparhdr         dw ?
+    e_minalloc        dw ?
+    e_maxalloc        dw ?
+    e_ss              dw ?
+    e_sp              dw ?
+    e_csum            dw ?
+    e_ip              dw ?
+    e_cs              dw ?
+    e_lfarlc          dw ?
+    e_ovno            dw ?
+    e_res             rw 4
+    e_oemid           dw ?
+    e_oeminfo         dw ?
+    e_res2            rw 10
+    e_lfanew          dd ?
 ends
 
 struct IMAGE_SECTION_HEADER
-    .Name                 rb 8
-    .VirtualSize          dd ?
-    .VirtualAddress       dd ?
-    .SizeOfRawData        dd ?
-    .OffsetToRawData      dd ?
-    .OffsetToRelocations  dd ?
-    .OffsetToLinenumbers  dd ?
-    .NumberOfRelocations  dw ?
-    .NumberOfLinenumbers  dw ?
-    .Characteristics      dd ?
+    Name                 rb 8
+    VirtualSize          dd ?
+    VirtualAddress       dd ?
+    SizeOfRawData        dd ?
+    OffsetToRawData      dd ?
+    OffsetToRelocations  dd ?
+    OffsetToLinenumbers  dd ?
+    NumberOfRelocations  dw ?
+    NumberOfLinenumbers  dw ?
+    Characteristics      dd ?
 ends
 
 struct LoaderData
-    .ImageBase dd ?
-	.NtHeaders dd ?
-	.BaseRelocation dd ?
-	.ImportDirectory dd ?
-	.LoadLibraryA dd ?
-	.GetProcAddress dd ?
+    ImageBase dd ?
+	NtHeaders dd ?
+	BaseRelocation dd ?
+	ImportDirectory dd ?
+	LoadLibraryA dd ?
+	GetProcAddress dd ?
 ends
 
 section '.text' code executable
@@ -197,7 +197,7 @@ proc injectManualMap
         dllDOSHeader IMAGE_DOS_HEADER
     end virtual
 
-    virtual at allocatedMemory + IMAGE_DOS_HEADER.e_lfanew
+    virtual at allocatedMemory + IMAGE_DOS_HEADER..e_lfanew
         dllNTHeaders IMAGE_NT_HEADERS
     end virtual
 
@@ -207,11 +207,11 @@ proc injectManualMap
     invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, eax
     mov [processHandle], eax
     lea eax, [processHandle]
-    invoke VirtualAllocEx, dword [eax], NULL, dllNTHeaders.OptionalHeader.SizeOfImage, MEM_COMMIT + MEM_RESERVE, PAGE_EXECUTE_READWRITE
+    invoke VirtualAllocEx, dword [eax], NULL, dllNTHeaders..OptionalHeader.SizeOfImage, MEM_COMMIT + MEM_RESERVE, PAGE_EXECUTE_READWRITE
     mov [allocatedMemoryEx], eax
     lea ebx, [processHandle]
     lea ecx, [allocatedMemory]
-    invoke WriteProcessMemory, dword [ebx], dword [eax], dword [ecx], dllNTHeaders.OptionalHeader.SizeOfHeaders, NULL
+    invoke WriteProcessMemory, dword [ebx], dword [eax], dword [ecx], dllNTHeaders..OptionalHeader.SizeOfHeaders, NULL
 
     virtual at dllNTHeaders + 1
         dllSectionHeader IMAGE_SECTION_HEADER
@@ -228,8 +228,9 @@ proc injectManualMap
         lea eax, [processHandle]
         lea ebx, [allocatedMemoryEx]
         lea edx, [allocatedMemory]
+        lea esi, [sectionHeader.SizeOfRawData]
         push ecx
-        invoke WriteProcessMemory, dword [eax], dword [ebx + sectionHeader.VirtualAddress], dword [edx + sectionHeader.OffsetToRawData], sectionHeader.SizeOfRawData, NULL
+        invoke WriteProcessMemory, dword [eax], dword [ebx]  + [sectionHeader.VirtualAddress], dword [edx] + [sectionHeader.OffsetToRawData], dword [esi], NULL
         pop ecx
         inc ecx
         cmp ecx, [dllNTHeaders.FileHeader.NumberOfSections]
