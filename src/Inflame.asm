@@ -7,10 +7,21 @@ section '.text' code executable
 
 main:
     cinvoke __getmainargs, argc, argv, env, 0
-    cmp [argc], 3
+    cmp [argc], 4
     jne error
-    stdcall injectLoadLibraryA
+    mov esi, [argv]
+    cinvoke atoi, dword [esi + 4]
+    cmp eax, 1
+    je loadlibrary
+    cmp eax, 2
+    je loadmanualmap
     invoke ExitProcess, 0
+
+loadlibrary:
+    stdcall injectLoadLibraryA
+
+manualmap:
+    stdcall injectManualMap
 
 error:
     cinvoke printf, <'Wrong amount of Command line arguments! Press enter to continue...', 0>
