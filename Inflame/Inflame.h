@@ -5,3 +5,5 @@
 #else
 #define INFLAME_API __declspec(dllimport)
 #endif
+
+void manualMap(char* dllName, int PID);
