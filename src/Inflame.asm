@@ -53,6 +53,9 @@ proc injectLoadLibraryA
 endp
 
 proc injectManualMap
+    mov esi, [argv]
+    cinvoke atoi, dword [esi + 8]
+    mov esi, [argv]
     ret
 endp
 
