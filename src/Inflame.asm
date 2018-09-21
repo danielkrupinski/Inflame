@@ -56,6 +56,7 @@ proc injectManualMap
     mov esi, [argv]
     cinvoke atoi, dword [esi + 8]
     mov esi, [argv]
+    cinvoke manualMap, dword [esi + 4], eax
     ret
 endp
 
