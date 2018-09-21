@@ -68,7 +68,8 @@ env     dd ?
 section '.idata' data readable import
 
 library kernel32, 'kernel32.dll', \
-        msvcrt, 'msvcrt.dll'
+        msvcrt, 'msvcrt.dll', \
+        Inflame, 'Inflame.dll'
 
 import kernel32, \
        ExitProcess, 'ExitProcess', \
