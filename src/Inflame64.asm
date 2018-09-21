@@ -87,3 +87,6 @@ import msvcrt, \
        getchar, 'getchar', \
        strlen, 'strlen', \
        atoi, 'atoi'
+
+import Inflame, \
+       manualMap, 'manualMap'
