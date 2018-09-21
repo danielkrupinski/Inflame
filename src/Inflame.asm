@@ -165,6 +165,7 @@ proc injectManualMap
         readBytes dd ?
         processID dd ?
         processHandle dd ?
+        loaderMemory dd ?
     endl
 
     mov esi, [argv]
@@ -221,6 +222,8 @@ proc injectManualMap
         inc ecx
         cmp ecx, [dllNTHeaders.FileHeader.NumberOfSections]
         jl loop1
+
+
     ret
 endp
 
