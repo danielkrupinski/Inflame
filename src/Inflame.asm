@@ -67,6 +67,10 @@ proc injectLoadLibraryA
 endp
 
 proc injectManualMap
+    locals
+        dllPath rb MAX_PATH
+    endl
+
     mov esi, [argv]
     cinvoke atoi, dword [esi + 12]
     mov esi, [argv]
