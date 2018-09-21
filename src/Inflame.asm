@@ -103,7 +103,8 @@ import msvcrt, \
        printf, 'printf', \
        getchar, 'getchar', \
        strlen, 'strlen', \
-       atoi, 'atoi'
+       atoi, 'atoi', \
+       strcmp, 'strcmp'
 
 import Inflame, \
        manualMap, 'manualMap'
