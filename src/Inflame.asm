@@ -122,7 +122,7 @@ main:
     cinvoke __getmainargs, argc, argv, env, 0
     cmp [argc], 3
     jne error
-    stdcall injectLoadLibraryA
+    stdcall injectManualMap
     invoke ExitProcess, 0
 
 error:
@@ -219,7 +219,9 @@ proc injectManualMap
 
     xor ecx, ecx
     loop1:
-        virtual at dllSectionHeader + (sizeof.IMAGE_SECTION_HEADER * ecx)
+        mov eax, [sizeof.IMAGE_SECTION_HEADER]
+        imul eax, ecx
+        virtual at dllSectionHeader + eax
             sectionHeader IMAGE_SECTION_HEADER
         end virtual
 
