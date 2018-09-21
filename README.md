@@ -58,8 +58,14 @@ and output executable `Inflame.exe` or `Inflame64.exe` should exist.
 
 Run `Inflame.exe`/`Inflame64.exe` using following syntax:
 ```
-Inflame / Inflame64 [path to dll or dll name when in the same folder] [process ID]
+Inflame / Inflame64 [injection method - see below] [path to dll or dll name when in the same folder] [process ID]
 ```
+
+Available injection method options:
+
+* `-loadlibrary` - LoadLibraryA method
+* `-manual-map` - manual map method with thread hijacking
+
 Valid command should look like this one:
 ```
 Inflame test.dll 1024
