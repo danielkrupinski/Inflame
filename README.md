@@ -66,13 +66,13 @@ Available injection method options:
 * `-loadlibrary` - LoadLibraryA method
 * `-manual-map` - manual map method with thread hijacking
 
-Valid command should look like this one:
+Valid command should look like these:
 ```
-Inflame test.dll 1024
+Inflame -loadlibrary test.dll 1024
 ```
 or
 ```
-Inflame64 test64.dll 2048
+Inflame64 -manual-map test64.dll 2048
 ```
 
 ## License
