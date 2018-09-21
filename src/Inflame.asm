@@ -175,6 +175,7 @@ proc injectManualMap
         processID dd ?
         processHandle dd ?
         loaderMemory dd ?
+        loaderData LoaderData
     endl
 
     mov esi, [argv]
