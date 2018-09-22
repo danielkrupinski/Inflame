@@ -41,13 +41,13 @@ proc injectLoadLibraryA
 
     mov rsi, [argv]
     lea rax, [dllPath]
-    invoke GetFullPathNameA, qword [rsi + 8], MAX_PATH, rax, 0
+    invoke GetFullPathNameA, qword [rsi + 16], MAX_PATH, rax, 0
     lea rax, [dllPath]
     cinvoke strlen, rax
     inc rax
     mov [dllPathLength], rax
     mov rsi, [argv]
-    cinvoke atoi, qword [rsi + 16]
+    cinvoke atoi, qword [rsi + 24]
     invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, eax
     mov [processHandle], rax
     lea rax, [dllPathLength]
