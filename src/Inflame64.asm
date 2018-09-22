@@ -9,14 +9,14 @@ main:
     cinvoke __getmainargs, argc, argv, env, 0
     cmp [argc], 4
     jne error
-    mov esi, [argv]
-    cinvoke strcmp, dword [esi + 4], <'-loadlibrary', 0>
-    .if eax, e, 0
+    mov rsi, [argv]
+    cinvoke strcmp, qword [rsi + 8], <'-loadlibrary', 0>
+    .if rax, e, 0
         stdcall injectLoadLibraryA
     .else
-        mov esi, [argv]
-        cinvoke strcmp, dword [esi + 4], <'-manual-map', 0>
-        .if eax, e, 0
+        mov rsi, [argv]
+        cinvoke strcmp, qword [rsi + 8], <'-manual-map', 0>
+        .if rax, e, 0
             stdcall injectManualMap
         .else
             cinvoke printf, <'Wrong injection method! Press enter to continue...', 0>
