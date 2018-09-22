@@ -54,7 +54,17 @@ proc injectLoadLibraryA
 endp
 
 proc injectManualMap
+    locals
+        dllPath rb MAX_PATH
+    endl
 
+    mov esi, [argv]
+    lea eax, [dllPath]
+    invoke GetFullPathNameA, dword [esi + 8], MAX_PATH, eax, 0
+    mov esi, [argv]
+    cinvoke atoi, dword [esi + 12]
+    lea ebx, [dllPath]
+    cinvoke manualMap, ebx, eax
     ret
 endp
 
