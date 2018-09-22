@@ -26,6 +26,8 @@ main:
     .endif
     invoke ExitProcess, 0
 
+loadlibrary:
+
 error:
     cinvoke printf, <'Wrong amount of Command line arguments! Press enter to continue...', 0>
     cinvoke getchar
