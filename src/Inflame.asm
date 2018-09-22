@@ -22,9 +22,9 @@ main:
     invoke ExitProcess, 1
 
 loadlibrary:
-
+    stdcall injectLoadLibraryA
 manualmap:
-
+    stdcall injectManualMap
 
 error:
     cinvoke printf, <'Wrong amount of Command line arguments! Press enter to continue...', 0>
