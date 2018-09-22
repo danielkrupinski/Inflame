@@ -7,9 +7,23 @@ section '.text' code executable
 
 main:
     cinvoke __getmainargs, argc, argv, env, 0
-    cmp [argc], 3
+    cmp [argc], 4
     jne error
-    stdcall injectLoadLibraryA
+    mov esi, [argv]
+    cinvoke strcmp, dword [esi + 4], <'-loadlibrary', 0>
+    .if eax, e, 0
+        stdcall injectLoadLibraryA
+    .else
+        mov esi, [argv]
+        cinvoke strcmp, dword [esi + 4], <'-manual-map', 0>
+        .if eax, e, 0
+            stdcall injectManualMap
+        .else
+            cinvoke printf, <'Wrong injection method! Press enter to continue...', 0>
+            cinvoke getchar
+            invoke ExitProcess, 1
+        .endif
+    .endif
     invoke ExitProcess, 0
 
 error:
