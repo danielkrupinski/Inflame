@@ -58,13 +58,13 @@ proc injectManualMap
         dllPath rb MAX_PATH
     endl
 
-    mov esi, [argv]
-    lea eax, [dllPath]
-    invoke GetFullPathNameA, dword [esi + 8], MAX_PATH, eax, 0
-    mov esi, [argv]
-    cinvoke atoi, dword [esi + 12]
-    lea ebx, [dllPath]
-    cinvoke manualMap, ebx, eax
+    mov rsi, [argv]
+    lea rax, [dllPath]
+    invoke GetFullPathNameA, qword [rsi + 16], MAX_PATH, rax, 0
+    mov rsi, [argv]
+    cinvoke atoi, qword [rsi + 24]
+    lea rbx, [dllPath]
+    cinvoke manualMap, rbx, rax
     ret
 endp
 
