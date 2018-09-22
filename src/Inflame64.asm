@@ -48,7 +48,7 @@ proc injectLoadLibraryA
     mov [dllPathLength], rax
     mov rsi, [argv]
     cinvoke atoi, qword [rsi + 24]
-    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, eax
+    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, rax
     mov [processHandle], rax
     lea rax, [dllPathLength]
     lea rbx, [processHandle]
