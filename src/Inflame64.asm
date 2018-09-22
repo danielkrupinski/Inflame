@@ -78,6 +78,7 @@ proc injectManualMap
     mov rsi, [argv]
     cinvoke atoi, qword [rsi + 24]
     lea rbx, [dllPath]
+    sub rsp, 8
     cinvoke manualMap, rbx, rax
     ret
 endp
