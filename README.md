@@ -53,6 +53,11 @@ flat assembler  version 1.73.04  (1048576 kilobytes memory)
 ```
 and output executable `Inflame.exe` or `Inflame64.exe` should exist.
 
+5. Then switch to `manual-map` branch and open `Inflame.sln` in Visual Studio 2017.
+
+Compile `Inflame.dll` with `x86 | Release`  or `x64 | Release` configuration.
+
+Finally, copy `Inflame.dll` to same directory as `Inflame.exe`.
 
 ### Usage
 
