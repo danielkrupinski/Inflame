@@ -12,11 +12,11 @@ main:
     mov esi, [argv]
     cinvoke strcmp, dword [esi + 4], <'-loadlibrary', 0>
     cmp eax, 0
-    je loadlibrary    ;stdcall injectLoadLibraryA
+    je loadlibrary
     mov esi, [argv]
     cinvoke strcmp, dword [esi + 4], <'-manual-map', 0>
     cmp eax, 0
-    je manualmap ;stdcall injectManualMap
+    je manualmap
     cinvoke printf, <'Wrong injection method! Press enter to continue...', 0>
     cinvoke getchar
     invoke ExitProcess, 1
