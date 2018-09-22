@@ -102,8 +102,7 @@ import kernel32, \
        VirtualAllocEx, 'VirtualAllocEx', \
        WriteProcessMemory, 'WriteProcessMemory', \
        CreateRemoteThread, 'CreateRemoteThread', \
-       CloseHandle, 'CloseHandle', \
-       CreateFileA, 'CreateFileA'
+       CloseHandle, 'CloseHandle'
 
 import msvcrt, \
        __getmainargs, '__getmainargs', \
