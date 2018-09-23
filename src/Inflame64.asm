@@ -11,20 +11,15 @@ main:
     jne error
     mov rsi, [argv]
     cinvoke strcmp, qword [rsi + 8], <'-loadlibrary', 0>
-    .if rax, e, 0
-        stdcall injectLoadLibraryA
-    .else
-        mov rsi, [argv]
-        cinvoke strcmp, qword [rsi + 8], <'-manual-map', 0>
-        .if rax, e, 0
-            stdcall injectManualMap
-        .else
-            cinvoke printf, <'Wrong injection method! Press enter to continue...', 0>
-            cinvoke getchar
-            invoke ExitProcess, 1
-        .endif
-    .endif
-    invoke ExitProcess, 0
+    cmp rax, 0
+    je loadlibrary
+    mov rsi, [argv]
+    cinvoke strcmp, qword [rsi + 8], <'-manual-map', 0>
+    cmp rax, 0
+    je manualmap
+    cinvoke printf, <'Wrong injection method! Press enter to continue...', 0>
+    cinvoke getchar
+    invoke ExitProcess, 1
 
 loadlibrary:
     stdcall injectLoadLibraryA
