@@ -96,7 +96,7 @@ section '.idata' data readable import
 
 library kernel32, 'kernel32.dll', \
         msvcrt, 'msvcrt.dll', \
-        Inflame, 'Inflame.dll'
+        Inflame64, 'Inflame64.dll'
 
 import kernel32, \
        ExitProcess, 'ExitProcess', \
@@ -117,5 +117,5 @@ import msvcrt, \
        atoi, 'atoi', \
        strcmp, 'strcmp'
 
-import Inflame, \
+import Inflame64, \
        manualMap, 'manualMap'
