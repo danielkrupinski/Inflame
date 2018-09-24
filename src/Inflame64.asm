@@ -105,6 +105,7 @@ import kernel32, \
        GetProcAddress, 'GetProcAddress', \
        OpenProcess, 'OpenProcess', \
        VirtualAllocEx, 'VirtualAllocEx', \
+       VirtualFreeEx, 'VirtualFreeEx', \
        WriteProcessMemory, 'WriteProcessMemory', \
        CreateRemoteThread, 'CreateRemoteThread', \
        CloseHandle, 'CloseHandle', \
