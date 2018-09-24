@@ -104,7 +104,8 @@ import kernel32, \
        VirtualAllocEx, 'VirtualAllocEx', \
        WriteProcessMemory, 'WriteProcessMemory', \
        CreateRemoteThread, 'CreateRemoteThread', \
-       CloseHandle, 'CloseHandle'
+       CloseHandle, 'CloseHandle', \
+       WaitForSingleObject, 'WaitForSingleObject'
 
 import msvcrt, \
        __getmainargs, '__getmainargs', \
