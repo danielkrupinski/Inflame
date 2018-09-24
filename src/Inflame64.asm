@@ -67,6 +67,10 @@ proc injectLoadLibraryA
     invoke CreateRemoteThread, qword [rbx], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, qword [rsi], 0, NULL
     invoke WaitForSingleObject, rax, 0xFFFFFFFF
     lea rax, [processHandle]
+    lea rbx, [allocatedMemory]
+    lea rcx, [dllPathLength]
+    invoke VirtualFreeEx, qword [rax], qword [rbx], qword [dllPathLength], MEM_RELEASE
+    lea rax, [processHandle]
     invoke CloseHandle, qword [rax]
     ret
 endp
