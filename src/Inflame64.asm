@@ -65,6 +65,7 @@ proc injectLoadLibraryA
     lea rbx, [processHandle]
     lea rsi, [allocatedMemory]
     invoke CreateRemoteThread, qword [rbx], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, qword [rsi], 0, NULL
+    invoke WaitForSingleObject, rax, 0xFFFFFFFF
     lea rax, [processHandle]
     invoke CloseHandle, qword [rax]
     ret
