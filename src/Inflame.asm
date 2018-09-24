@@ -63,6 +63,7 @@ proc injectLoadLibraryA
     lea ebx, [processHandle]
     lea esi, [allocatedMemory]
     invoke CreateRemoteThread, dword [ebx], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, dword [esi], 0, NULL
+    invoke WaitForSingleObject, eax, INFINITE
     lea eax, [processHandle]
     invoke CloseHandle, dword [eax]
     ret
