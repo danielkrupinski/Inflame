@@ -82,7 +82,7 @@ Inflame64 -manual-map test64.dll 2048
 
 ## Acknowledgments
 
-* Zer0Mem0ry for manual map dll injection in C++, available [here](https://github.com/Zer0Mem0ry/ManualMap).
+* @Zer0Mem0ry for manual map dll injection in C++, available [here](https://github.com/Zer0Mem0ry/ManualMap).
 
 ## License
 
