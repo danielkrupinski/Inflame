@@ -8,7 +8,7 @@ User-mode Windows DLL injector written in Assembly language ([FASM](https://flat
 - **lightning fast:** injection takes less than `1ms`
 - **easy to use:** invoked with Command Line options
 - **universal:** both `32-bit` and `64-bit` versions are **actively** maintained
-- **safe:** Inflame is **safe to use** and it won't harm your PC. If you don't believe - check the source code.
+- **safe:** Inflame is **safe to use** and it won't harm your PC. If you don't believe - check the [source code](https://github.com/danielkrupinski/Inflame/tree/master/src).
 
 ## Getting Started
 
