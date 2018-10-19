@@ -16,6 +16,8 @@ User-mode Windows DLL injector written in Assembly language ([FASM](https://flat
 
 FASM (flat assembler) for Windows is required to compile Inflame. You can get the latest version [here](https://flatassembler.net/download.php).
 
+Visual Studio is required to compile **manual-map** module - `Inflame.dll` / `Inflame64.dll`. You can omit installing VS by downloading required DLL from Release section.
+
 
 ### Clone
 
