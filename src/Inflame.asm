@@ -19,19 +19,19 @@ main:
     je manualmap
     cinvoke printf, <'Wrong injection method! Press enter to continue...', 0>
     cinvoke getchar
-    invoke ExitProcess, 1
+    retn
 
 loadlibrary:
     stdcall injectLoadLibraryA
-    invoke ExitProcess, 0
+    retn
 manualmap:
     stdcall injectManualMap
-    invoke ExitProcess, 0
+    retn
 
 error:
     cinvoke printf, <'Wrong amount of Command line arguments! Press enter to continue...', 0>
     cinvoke getchar
-    invoke ExitProcess, 1
+    retn
 
 proc injectLoadLibraryA
     mov esi, [argv]
