@@ -34,13 +34,6 @@ error:
     invoke ExitProcess, 1
 
 proc injectLoadLibraryA
-    locals
-        dllPath rb MAX_PATH
-        dllPathLength dd ?
-        processHandle dd ?
-        allocatedMemory dd ?
-    endl
-
     mov esi, [argv]
     lea eax, [dllPath]
     invoke GetFullPathNameA, dword [esi + 8], MAX_PATH, eax, 0
@@ -55,11 +48,7 @@ proc injectLoadLibraryA
     lea ebx, [processHandle]
     invoke VirtualAllocEx, dword [ebx], NULL, eax, MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
     mov [allocatedMemory], eax
-    lea eax, [dllPath]
-    lea ebx, [dllPathLength]
-    lea ecx, [processHandle]
-    lea edx, [allocatedMemory]
-    invoke WriteProcessMemory, dword [ecx], dword [edx], eax, dword [ebx], NULL
+    invoke WriteProcessMemory, [processHandle], [allocatedMemory], dllPath, [dllPathLength], NULL
     lea ebx, [processHandle]
     lea esi, [allocatedMemory]
     invoke CreateRemoteThread, dword [ebx], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, dword [esi], 0, NULL
@@ -74,10 +63,6 @@ proc injectLoadLibraryA
 endp
 
 proc injectManualMap
-    locals
-        dllPath rb MAX_PATH
-    endl
-
     mov esi, [argv]
     lea eax, [dllPath]
     invoke GetFullPathNameA, dword [esi + 8], MAX_PATH, eax, 0
@@ -93,6 +78,10 @@ section '.bss' data readable writable
 argc    dd ?
 argv    dd ?
 env     dd ?
+dllPath rb MAX_PATH
+dllPathLength dd ?
+processHandle dd ?
+allocatedMemory dd ?
 
 section '.idata' data readable import
 
