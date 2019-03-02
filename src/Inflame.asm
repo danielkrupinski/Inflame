@@ -90,7 +90,6 @@ library kernel32, 'kernel32.dll', \
         Inflame, 'Inflame.dll'
 
 import kernel32, \
-       ExitProcess, 'ExitProcess', \
        GetFullPathNameA, 'GetFullPathNameA', \
        GetModuleHandleA, 'GetModuleHandleA', \
        GetProcAddress, 'GetProcAddress', \
