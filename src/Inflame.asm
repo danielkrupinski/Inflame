@@ -22,18 +22,6 @@ main:
     retn
 
 loadlibrary:
-    stdcall injectLoadLibraryA
-    retn
-manualmap:
-    stdcall injectManualMap
-    retn
-
-error:
-    cinvoke printf, <'Wrong amount of Command line arguments! Press enter to continue...', 0>
-    cinvoke getchar
-    retn
-
-proc injectLoadLibraryA
     mov esi, [argv]
     invoke GetFullPathNameA, dword [esi + 8], MAX_PATH, dllPath, 0
     cinvoke strlen, dllPath
@@ -49,17 +37,20 @@ proc injectLoadLibraryA
     invoke WaitForSingleObject, eax, 0xFFFFFFFF
     invoke VirtualFreeEx, [processHandle], [allocatedMemory], dllPathLength, MEM_RELEASE
     invoke CloseHandle, [processHandle]
-    ret
-endp
+    retn
 
-proc injectManualMap
+manualmap:
     mov esi, [argv]
     invoke GetFullPathNameA, dword [esi + 8], MAX_PATH, dllPath, 0
     mov esi, [argv]
     cinvoke atoi, dword [esi + 12]
     cinvoke manualMap, dllPath, eax
-    ret
-endp
+    retn
+
+error:
+    cinvoke printf, <'Wrong amount of Command line arguments! Press enter to continue...', 0>
+    cinvoke getchar
+    retn
 
 section '.bss' data readable writable
 
