@@ -34,6 +34,36 @@ main:
     cinvoke getchar
     retn
 
+proc findProcessId, name
+    local snapshot:DWORD, processEntry:PROCESSENTRY32
+
+    invoke CreateToolhelp32Snapshot, 0x2, 0
+    mov [snapshot], eax
+    mov [processEntry.dwSize], sizeof.PROCESSENTRY32
+    lea eax, [processEntry]
+    invoke Process32First, [snapshot], eax
+    test eax, eax
+    jz .error
+    
+    .loop1:
+        lea eax, [processEntry.szExeFile]
+        cinvoke strcmp, eax, [name]
+        test eax, eax
+        jz .return
+        lea eax, [processEntry]
+        invoke Process32Next, [snapshot], eax
+        test eax, eax
+        jnz .loop1
+
+    .error:
+        xor eax, eax
+        ret
+
+    .return:
+        mov eax, [processEntry.th32ProcessID]
+        ret
+endp
+
 loadlibrary:
     mov esi, [argv]
     invoke GetFullPathNameA, dword [esi + 8], MAX_PATH, dllPath, 0
