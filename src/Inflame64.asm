@@ -95,7 +95,7 @@ proc injectLoadLibraryA
     inc rax
     mov [dllPathLength], rax
     mov rsi, [argv]
-    cinvoke atoi, qword [rsi + 24]
+    stdcall findProcessId, qword [rsi + 24]
     invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, rax
     mov [processHandle], rax
     lea rax, [dllPathLength]
@@ -119,7 +119,7 @@ proc injectManualMap
     lea rax, [dllPath]
     invoke GetFullPathNameA, qword [rsi + 16], MAX_PATH, rax, 0
     mov rsi, [argv]
-    cinvoke atoi, qword [rsi + 24]
+    stdcall findProcessId, qword [rsi + 24]
     lea rbx, [dllPath]
     sub rsp, 8
     cinvoke manualMap, rbx, rax
