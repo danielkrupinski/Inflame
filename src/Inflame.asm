@@ -70,10 +70,12 @@ library kernel32, 'kernel32.dll', \
 
 import kernel32, \
        CreateToolhelp32Snapshot, 'CreateToolhelp32Snapshot', \
+
        GetFullPathNameA, 'GetFullPathNameA', \
        GetModuleHandleA, 'GetModuleHandleA', \
        GetProcAddress, 'GetProcAddress', \
        OpenProcess, 'OpenProcess', \
+       Process32First, 'Process32First', \
        VirtualAllocEx, 'VirtualAllocEx', \
        VirtualFreeEx, 'VirtualFreeEx', \
        WriteProcessMemory, 'WriteProcessMemory', \
