@@ -71,7 +71,8 @@ loadlibrary:
     inc eax
     mov [dllPathLength], eax
     mov esi, [argv]
-    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, <cinvoke atoi, dword [esi + 12]>
+    stdcall findProcessId, dword [esi + 12]
+    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, eax
     mov [processHandle], eax
     invoke VirtualAllocEx, [processHandle], NULL, dllPathLength, MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
     mov [allocatedMemory], eax
@@ -86,7 +87,7 @@ manualmap:
     mov esi, [argv]
     invoke GetFullPathNameA, dword [esi + 8], MAX_PATH, dllPath, 0
     mov esi, [argv]
-    cinvoke atoi, dword [esi + 12]
+    stdcall findProcessId, dword [esi + 12]
     cinvoke manualMap, dllPath, eax
     retn
 
