@@ -65,7 +65,7 @@ Finally, copy `Inflame.dll` to same directory as `Inflame.exe`.
 
 Run `Inflame.exe`/`Inflame64.exe` using following syntax:
 ```
-Inflame / Inflame64 [injection method - see below] [path to dll or dll name when in the same folder] [process ID]
+Inflame / Inflame64 [injection method - see below] [path to dll or dll name when in the same folder] [process name]
 ```
 
 Available injection method options:
@@ -75,11 +75,11 @@ Available injection method options:
 
 Valid command should look like these:
 ```
-Inflame -loadlibrary test.dll 1024
+Inflame -loadlibrary test.dll Steam.exe
 ```
 or
 ```
-Inflame64 -manual-map test64.dll 2048
+Inflame64 -manual-map test64.dll notepad.exe
 ```
 
 ## Acknowledgments
@@ -89,6 +89,6 @@ Inflame64 -manual-map test64.dll 2048
 
 ## License
 
-> Copyright (c) 2018 Daniel Krupiński
+> Copyright (c) 2018-2019 Daniel Krupiński
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/mit-license.php) - see the [LICENSE](LICENSE) file for details.
