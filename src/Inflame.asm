@@ -3,6 +3,19 @@ entry main
 
 include 'INCLUDE/win32ax.inc'
 
+struct PROCESSENTRY32
+       dwSize                  dd ?
+       cntUsage                dd ?
+       th32ProcessID           dd ?
+       th32DefaultHeapID       dd ?
+       th32ModuleID            dd ?
+       cntThreads              dd ?
+       th32ParentProcessID     dd ?
+       pcPriClassBase          dd ?
+       dwFlags                 dd ?
+       szExeFile               dw MAX_PATH dup (?)
+ends
+
 section '.text' code executable
 
 main:
