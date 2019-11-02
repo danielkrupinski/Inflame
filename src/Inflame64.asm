@@ -35,6 +35,37 @@ main:
     cinvoke getchar
     retn
 
+proc findProcessId, name
+    local snapshot:QWORD, processEntry:PROCESSENTRY32
+
+    mov [name], rcx
+    invoke CreateToolhelp32Snapshot, 0x2, 0
+    mov [snapshot], rax
+    mov [processEntry.dwSize], sizeof.PROCESSENTRY32
+    lea rax, [processEntry]
+    invoke Process32First, [snapshot], rax
+    test rax, rax
+    jz .error
+    
+    .loop1:
+        lea rax, [processEntry.szExeFile]
+        cinvoke strcmp, rax, [name]
+        test rax, rax
+        jz .return
+        lea rax, [processEntry]
+        invoke Process32Next, [snapshot], rax
+        test rax, rax
+        jnz .loop1
+
+    .error:
+        xor rax, rax
+        ret
+
+    .return:
+        mov eax, [processEntry.th32ProcessID]
+        ret
+endp
+
 loadlibrary:
     stdcall injectLoadLibraryA
     retn
