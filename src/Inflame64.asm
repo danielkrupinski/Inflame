@@ -54,24 +54,14 @@ proc injectLoadLibraryA
     invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, rax
     mov [processHandle], rax
     lea rax, [dllPathLength]
-    lea rbx, [processHandle]
-    invoke VirtualAllocEx, qword [rbx], NULL, rax, MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
+    invoke VirtualAllocEx, [processHandle], NULL, rax, MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
     mov [allocatedMemory], rax
     lea rax, [dllPath]
-    lea rbx, [dllPathLength]
-    lea rcx, [processHandle]
-    lea rdx, [allocatedMemory]
-    invoke WriteProcessMemory, qword [rcx], qword [rdx], rax, qword [rbx], NULL
-    lea rbx, [processHandle]
-    lea rsi, [allocatedMemory]
-    invoke CreateRemoteThread, qword [rbx], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, qword [rsi], 0, NULL
+    invoke WriteProcessMemory,[processHandle], [allocatedMemory], rax, [dllPathLength], NULL
+    invoke CreateRemoteThread, [processHandle], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, [allocatedMemory], 0, NULL
     invoke WaitForSingleObject, rax, 0xFFFFFFFF
-    lea rax, [processHandle]
-    lea rbx, [allocatedMemory]
-    lea rcx, [dllPathLength]
-    invoke VirtualFreeEx, qword [rax], qword [rbx], qword [dllPathLength], MEM_RELEASE
-    lea rax, [processHandle]
-    invoke CloseHandle, qword [rax]
+    invoke VirtualFreeEx, [processHandle], [allocatedMemory], qword [dllPathLength], MEM_RELEASE
+    invoke CloseHandle, [processHandle]
     ret
 endp
 
