@@ -100,6 +100,7 @@ import kernel32, \
        GetProcAddress, 'GetProcAddress', \
        OpenProcess, 'OpenProcess', \
        Process32First, 'Process32First', \
+       Process32Next, 'Process32Next', \
        VirtualAllocEx, 'VirtualAllocEx', \
        VirtualFreeEx, 'VirtualFreeEx', \
        WriteProcessMemory, 'WriteProcessMemory', \
