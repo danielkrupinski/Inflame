@@ -99,6 +99,7 @@ import kernel32, \
        GetModuleHandleA, 'GetModuleHandleA', \
        GetProcAddress, 'GetProcAddress', \
        OpenProcess, 'OpenProcess', \
+       Process32First, 'Process32First', \
        VirtualAllocEx, 'VirtualAllocEx', \
        VirtualFreeEx, 'VirtualFreeEx', \
        WriteProcessMemory, 'WriteProcessMemory', \
