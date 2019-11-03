@@ -127,6 +127,7 @@ import kernel32, \
        OpenProcess, 'OpenProcess', \
        Process32First, 'Process32First', \
        Process32Next, 'Process32Next', \
+       ReadFile, 'ReadFile', \
        VirtualAllocEx, 'VirtualAllocEx', \
        VirtualFreeEx, 'VirtualFreeEx', \
        WaitForSingleObject, 'WaitForSingleObject', \   
