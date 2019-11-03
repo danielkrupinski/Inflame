@@ -94,6 +94,12 @@ error:
     cinvoke getchar
     retn
 
+manualmap_2:
+    mov esi, [argv]
+    invoke GetFullPathNameA, dword [esi + 8], MAX_PATH, dllPath, 0
+    invoke CreateFileA, dllPath, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
+    retn
+
 section '.bss' data readable writable
 
 argc    dd ?
