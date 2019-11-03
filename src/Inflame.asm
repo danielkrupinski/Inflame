@@ -117,7 +117,9 @@ library kernel32, 'kernel32.dll', \
         Inflame, 'Inflame.dll'
 
 import kernel32, \
+       CloseHandle, 'CloseHandle', \
        CreateFileA, 'CreateFileA', \
+       CreateRemoteThread, 'CreateRemoteThread', \
        CreateToolhelp32Snapshot, 'CreateToolhelp32Snapshot', \
        GetFullPathNameA, 'GetFullPathNameA', \
        GetModuleHandleA, 'GetModuleHandleA', \
@@ -127,18 +129,16 @@ import kernel32, \
        Process32Next, 'Process32Next', \
        VirtualAllocEx, 'VirtualAllocEx', \
        VirtualFreeEx, 'VirtualFreeEx', \
-       WriteProcessMemory, 'WriteProcessMemory', \
-       CreateRemoteThread, 'CreateRemoteThread', \
-       CloseHandle, 'CloseHandle', \
-       WaitForSingleObject, 'WaitForSingleObject'
+       WaitForSingleObject, 'WaitForSingleObject', \   
+       WriteProcessMemory, 'WriteProcessMemory'
 
 import msvcrt, \
+       atoi, 'atoi', \
+       getchar, 'getchar', \
        __getmainargs, '__getmainargs', \
        printf, 'printf', \
-       getchar, 'getchar', \
-       strlen, 'strlen', \
-       atoi, 'atoi', \
-       strcmp, 'strcmp'
+       strcmp, 'strcmp', \
+       strlen, 'strlen'
 
 import Inflame, \
        manualMap, 'manualMap'
