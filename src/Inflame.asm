@@ -103,6 +103,8 @@ manualmap_2:
     mov esi, [argv]
     invoke GetFullPathNameA, dword [esi + 8], MAX_PATH, dllPath, 0
     invoke CreateFileA, dllPath, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
+    invoke GetFileSizeEx, eax, fileSize
+    cinvoke printf, <'File size: %d', 0>, [fileSize.LowPart]
     retn
 
 section '.bss' data readable writable
@@ -114,6 +116,7 @@ dllPath rb MAX_PATH
 dllPathLength dd ?
 processHandle dd ?
 allocatedMemory dd ?
+fileSize LARGE_INTEGER ?
 
 section '.idata' data readable import
 
