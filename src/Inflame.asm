@@ -16,6 +16,11 @@ struct PROCESSENTRY32
        szExeFile               dw MAX_PATH dup (?)
 ends
 
+struct LARGE_INTEGER
+       LowPart                 dd ?
+       HighPart                dd ?
+ends
+
 section '.text' code executable
 
 main:
