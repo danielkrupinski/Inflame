@@ -121,6 +121,7 @@ import kernel32, \
        CreateFileA, 'CreateFileA', \
        CreateRemoteThread, 'CreateRemoteThread', \
        CreateToolhelp32Snapshot, 'CreateToolhelp32Snapshot', \
+       GetFileSizeEx, 'GetFileSizeEx', \
        GetFullPathNameA, 'GetFullPathNameA', \
        GetModuleHandleA, 'GetModuleHandleA', \
        GetProcAddress, 'GetProcAddress', \
