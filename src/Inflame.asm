@@ -26,7 +26,7 @@ section '.text' code executable
 main:
     cinvoke __getmainargs, argc, argv, env, 0
     cmp [argc], 4
-    jne error
+    jne wrongArgumentCount
     mov esi, [argv]
     invoke GetFullPathNameA, dword [esi + 8], MAX_PATH, dllPath, 0
     cinvoke strlen, dllPath
@@ -40,9 +40,9 @@ main:
     cinvoke strcmp, dword [esi + 4], <'-manual-map', 0>
     test eax, eax
     jz manualmap
-    cinvoke printf, <'Wrong injection method! Press enter to continue...', 0>
-    cinvoke getchar
-    retn
+    stdcall criticalError, <'Wrong injection method!', 0>
+    wrongArgumentCount:
+        stdcall criticalError, <'Wrong amount of command line arguments!', 0>
 
 proc findProcessId, name
     local snapshot:DWORD, processEntry:PROCESSENTRY32
@@ -90,11 +90,6 @@ loadlibrary:
 manualmap:
     mov esi, [argv]
     cinvoke manualMap, dllPath, <stdcall findProcessId, dword [esi + 12]>
-    retn
-
-error:
-    cinvoke printf, <'Wrong amount of Command line arguments! Press enter to continue...', 0>
-    cinvoke getchar
     retn
 
 proc criticalError, message
