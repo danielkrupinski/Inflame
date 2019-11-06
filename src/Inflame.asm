@@ -145,6 +145,7 @@ import kernel32, \
        GetProcAddress, 'GetProcAddress', \
        GetProcessHeap, 'GetProcessHeap', \
        HeapAlloc, 'HeapAlloc', \
+       HeapFree, 'HeapFree', \
        OpenProcess, 'OpenProcess', \
        Process32First, 'Process32First', \
        Process32Next, 'Process32Next', \
