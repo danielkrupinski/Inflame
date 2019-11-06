@@ -136,6 +136,7 @@ import kernel32, \
        GetModuleHandleA, 'GetModuleHandleA', \
        GetProcAddress, 'GetProcAddress', \
        GetProcessHeap, 'GetProcessHeap', \
+       HeapAlloc, 'HeapAlloc', \
        OpenProcess, 'OpenProcess', \
        Process32First, 'Process32First', \
        Process32Next, 'Process32Next', \
