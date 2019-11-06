@@ -97,6 +97,11 @@ error:
     cinvoke getchar
     retn
 
+proc criticalError, message
+    cinvoke printf, <'Critical Error: %s', 0>, message
+    ret
+endp
+
 manualmap_2:
     invoke CreateFileA, dllPath, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
     invoke GetFileSizeEx, eax, fileSize
