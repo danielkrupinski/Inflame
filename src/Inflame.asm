@@ -28,6 +28,11 @@ main:
     cmp [argc], 4
     jne error
     mov esi, [argv]
+    invoke GetFullPathNameA, dword [esi + 8], MAX_PATH, dllPath, 0
+    cinvoke strlen, dllPath
+    inc eax
+    mov [dllPathLength], eax
+    mov esi, [argv]
     cinvoke strcmp, dword [esi + 4], <'-loadlibrary', 0>
     test eax, eax
     jz loadlibrary
@@ -71,11 +76,6 @@ endp
 
 loadlibrary:
     mov esi, [argv]
-    invoke GetFullPathNameA, dword [esi + 8], MAX_PATH, dllPath, 0
-    cinvoke strlen, dllPath
-    inc eax
-    mov [dllPathLength], eax
-    mov esi, [argv]
     invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, <stdcall findProcessId, dword [esi + 12]>
     mov [processHandle], eax
     invoke VirtualAllocEx, [processHandle], NULL, dllPathLength, MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
@@ -89,8 +89,6 @@ loadlibrary:
 
 manualmap:
     mov esi, [argv]
-    invoke GetFullPathNameA, dword [esi + 8], MAX_PATH, dllPath, 0
-    mov esi, [argv]
     cinvoke manualMap, dllPath, <stdcall findProcessId, dword [esi + 12]>
     retn
 
@@ -100,8 +98,6 @@ error:
     retn
 
 manualmap_2:
-    mov esi, [argv]
-    invoke GetFullPathNameA, dword [esi + 8], MAX_PATH, dllPath, 0
     invoke CreateFileA, dllPath, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
     invoke GetFileSizeEx, eax, fileSize
     cinvoke printf, <'File size: %d', 0>, [fileSize.LowPart]
