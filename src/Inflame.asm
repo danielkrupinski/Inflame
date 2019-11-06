@@ -105,8 +105,16 @@ endp
 manualmap_2:
     invoke CreateFileA, dllPath, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
     invoke GetFileSizeEx, eax, fileSize
-    cinvoke printf, <'File size: %d', 0>, [fileSize.LowPart]
+    cinvoke printf, <'File size: %d', 10, 0>, [fileSize.LowPart]
+    invoke GetProcessHeap
+    test eax, eax
+    jz heapFail
+    mov [heapHandle], eax
+    cinvoke printf, <'Heap handle: %p', 10, 0>, [heapHandle]
+
     retn
+    heapFail:
+        stdcall criticalError, <'Failed to get process heap handle!', 0>
 
 section '.bss' data readable writable
 
@@ -118,6 +126,7 @@ dllPathLength dd ?
 processHandle dd ?
 allocatedMemory dd ?
 fileSize LARGE_INTEGER ?
+heapHandle dd ?
 
 section '.idata' data readable import
 
