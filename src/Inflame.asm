@@ -106,10 +106,14 @@ manualmap_2:
     jz heapFail
     mov [heapHandle], eax
     cinvoke printf, <'Heap handle: %p', 10, 0>, [heapHandle]
+    invoke HeapAlloc, [heapHandle], 0, [fileSize.LowPart]
+    cinvoke printf, <'Heap memory: %p', 10, 0>, eax
 
     retn
     heapFail:
         stdcall criticalError, <'Failed to get process heap handle!', 0>
+    heapAllocFail:
+        stdcall criticalError, <'Failed to allocate heap memory!', 0>
 
 section '.bss' data readable writable
 
