@@ -94,7 +94,7 @@ manualmap:
 
 proc criticalError, message
     cinvoke printf, <'Critical Error: %s', 0>, [message]
-    ret
+    invoke ExitProcess, 0
 endp
 
 manualmap_2:
