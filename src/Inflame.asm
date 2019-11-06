@@ -98,7 +98,7 @@ error:
     retn
 
 proc criticalError, message
-    cinvoke printf, <'Critical Error: %s', 0>, message
+    cinvoke printf, <'Critical Error: %s', 0>, [message]
     ret
 endp
 
