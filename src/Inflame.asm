@@ -130,6 +130,7 @@ import kernel32, \
        CreateFileA, 'CreateFileA', \
        CreateRemoteThread, 'CreateRemoteThread', \
        CreateToolhelp32Snapshot, 'CreateToolhelp32Snapshot', \
+       ExitProcess, 'ExitProcess', \
        GetFileSizeEx, 'GetFileSizeEx', \
        GetFullPathNameA, 'GetFullPathNameA', \
        GetModuleHandleA, 'GetModuleHandleA', \
