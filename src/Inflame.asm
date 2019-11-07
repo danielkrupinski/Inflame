@@ -140,12 +140,8 @@ manualmap_2:
     cinvoke printf, <'ReadFile: %d', 10, 0>, eax
 
     mov eax, [heapMemory]
-    virtual at eax
-        dosHeader IMAGE_DOS_HEADER
-    end virtual
-
     xor ebx, ebx
-    mov bx, [dosHeader.e_magic]
+    mov bx, [eax + IMAGE_DOS_HEADER.e_magic]
     cinvoke printf, <'DOS SIGNATURE: 0x%X', 10, 0>, ebx
     invoke HeapFree, [heapHandle], 0, [heapMemory]
 
