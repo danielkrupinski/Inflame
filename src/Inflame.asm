@@ -43,6 +43,16 @@ struct IMAGE_DOS_HEADER
        e_lfanew                dd ?
 ends
 
+struct IMAGE_FILE_HEADER
+       Machine                 dw ?
+       NumberOfSections        dw ?
+       TimeDateStamp           dd ?
+       PointerToSymbolTable    dd ?
+       NumberOfSymbols         dd ?
+       SizeOfOptionalHeader    dw ?
+       Characteristics         dw ?
+ends
+
 section '.text' code executable
 
 main:
