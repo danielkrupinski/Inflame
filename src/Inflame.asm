@@ -135,6 +135,8 @@ manualmap_2:
     mov [heapMemory], eax
     cinvoke printf, <'Heap memory: %p', 10, 0>, eax
     invoke ReadFile, [fileHandle], [heapMemory], [fileSize.LowPart], NULL, NULL
+    test eax, eax
+    jz readFileFail
     cinvoke printf, <'ReadFile: %d', 10, 0>, eax
 
     mov eax, [heapMemory]
@@ -152,6 +154,8 @@ manualmap_2:
         stdcall criticalError, <'Failed to get process heap handle!', 0>
     heapAllocFail:
         stdcall criticalError, <'Failed to allocate heap memory!', 0>
+    readFileFail:
+        stdcall criticalError, <'Failed to read dll file!', 0>
 
 section '.bss' data readable writable
 
