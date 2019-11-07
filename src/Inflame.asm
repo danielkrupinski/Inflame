@@ -99,6 +99,7 @@ endp
 
 manualmap_2:
     invoke CreateFileA, dllPath, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
+    mov [fileHandle], eax
     invoke GetFileSizeEx, eax, fileSize
     cinvoke printf, <'File size: %d', 10, 0>, [fileSize.LowPart]
     invoke GetProcessHeap
@@ -107,7 +108,13 @@ manualmap_2:
     mov [heapHandle], eax
     cinvoke printf, <'Heap handle: %p', 10, 0>, [heapHandle]
     invoke HeapAlloc, [heapHandle], 0, [fileSize.LowPart]
+    test eax, eax
+    jz heapAllocFail
+    mov [heapMemory], eax
     cinvoke printf, <'Heap memory: %p', 10, 0>, eax
+    invoke ReadFile, [fileHandle], [heapMemory], [fileSize.LowPart], NULL, NULL
+    cinvoke printf, <'ReadFile: %d', 10, 0>, eax
+    invoke HeapFree, [heapHandle], 0, [heapMemory]
 
     retn
     heapFail:
@@ -126,6 +133,8 @@ processHandle dd ?
 allocatedMemory dd ?
 fileSize LARGE_INTEGER ?
 heapHandle dd ?
+heapMemory dd ?
+fileHandle dd ?
 
 section '.idata' data readable import
 
