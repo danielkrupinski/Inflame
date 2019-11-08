@@ -179,16 +179,19 @@ manualmap_2:
     mov [fileHandle], eax
     invoke GetFileSizeEx, eax, fileSize
     cinvoke printf, <'File size: %d', 10, 0>, [fileSize.LowPart]
+
     invoke GetProcessHeap
     test eax, eax
     jz heapFail
     mov [heapHandle], eax
     cinvoke printf, <'Heap handle: %p', 10, 0>, [heapHandle]
+
     invoke HeapAlloc, [heapHandle], 0, [fileSize.LowPart]
     test eax, eax
     jz heapAllocFail
     mov [heapMemory], eax
     cinvoke printf, <'Heap memory: %p', 10, 0>, eax
+
     invoke ReadFile, [fileHandle], [heapMemory], [fileSize.LowPart], NULL, NULL
     test eax, eax
     jz readFileFail
@@ -198,6 +201,11 @@ manualmap_2:
     xor ebx, ebx
     mov bx, [eax + IMAGE_DOS_HEADER.e_magic]
     cinvoke printf, <'DOS SIGNATURE: 0x%X', 10, 0>, ebx
+
+    mov eax, [heapMemory]
+    add eax, [eax + IMAGE_DOS_HEADER.e_lfanew] 
+    cinvoke printf, <'Size of Image: %d', 10, 0>, [eax + IMAGE_NT_HEADERS.OptionalHeader.SizeOfImage]
+
     invoke HeapFree, [heapHandle], 0, [heapMemory]
 
     retn
