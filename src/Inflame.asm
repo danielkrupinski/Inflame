@@ -100,29 +100,40 @@ ends
 
 section '.text' code executable
 
-main:
+proc main
+    local pid:DWORD, path:rb MAX_PATH
+
     cinvoke __getmainargs, argc, argv, env, 0
     cmp [argc], 4
-    jne wrongArgumentCount
+    jne .wrongArgumentCount
     mov esi, [argv]
-    invoke GetFullPathNameA, dword [esi + 8], MAX_PATH, dllPath, 0
-    cinvoke strlen, dllPath
-    inc eax
-    mov [dllPathLength], eax
+    lea eax, [path]
+    invoke GetFullPathNameA, dword [esi + 8], MAX_PATH, eax, 0
     mov esi, [argv]
+    stdcall findProcessId, dword [esi + 12]
+    mov [pid], eax
+
     cinvoke strcmp, dword [esi + 4], <'-loadlibrary', 0>
     test eax, eax
-    jnz skip
-    mov esi, [argv]
-    stdcall loadlibrary, <stdcall findProcessId, dword [esi + 12]>
-    skip:
-    mov esi, [argv]
-    cinvoke strcmp, dword [esi + 4], <'-manual-map', 0>
-    test eax, eax
-    jz manualmap
-    stdcall criticalError, <'Wrong injection method!', 0>
-    wrongArgumentCount:
+    jnz .skip
+    lea eax, [path]
+    cinvoke strlen, eax
+    inc eax
+    lea ebx, [path]
+    stdcall loadlibrary, ebx, eax, [pid]
+    .skip:
+        mov esi, [argv]
+        cinvoke strcmp, dword [esi + 4], <'-manual-map', 0>
+        test eax, eax
+        jnz .wrongInjectionMethod
+        lea eax, [path]
+        stdcall manualmap, eax, [pid]
+    .wrongInjectionMethod:
+        stdcall criticalError, <'Wrong injection method!', 0>
+    .wrongArgumentCount:
         stdcall criticalError, <'Wrong amount of command line arguments!', 0>
+
+endp
 
 proc findProcessId, name
     local snapshot:DWORD, processEntry:PROCESSENTRY32
@@ -154,33 +165,33 @@ proc findProcessId, name
         ret
 endp
 
-proc loadlibrary, pid
+proc loadlibrary, path, pathLength, pid
     local handle:DWORD, allocatedMemory:DWORD
 
     invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, [pid]
     mov [handle], eax
-    invoke VirtualAllocEx, [handle], NULL, dllPathLength, MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
+    invoke VirtualAllocEx, [handle], NULL, [pathLength], MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
     mov [allocatedMemory], eax
-    invoke WriteProcessMemory, [handle], [allocatedMemory], dllPath, [dllPathLength], NULL
+    invoke WriteProcessMemory, [handle], [allocatedMemory], [path], [pathLength], NULL
     invoke CreateRemoteThread, [handle], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, [allocatedMemory], 0, NULL
     invoke WaitForSingleObject, eax, 0xFFFFFFFF
-    invoke VirtualFreeEx, [handle], [allocatedMemory], dllPathLength, MEM_RELEASE
+    invoke VirtualFreeEx, [handle], [allocatedMemory], [pathLength], MEM_RELEASE
     invoke CloseHandle, [handle]
     invoke ExitProcess, 0
 endp
 
-manualmap:
-    mov esi, [argv]
-    cinvoke manualMap, dllPath, <stdcall findProcessId, dword [esi + 12]>
-    retn
+proc manualmap, path, pid
+    cinvoke manualMap, [path], [pid]
+    invoke ExitProcess, 0
+endp
 
 proc criticalError, message
     cinvoke printf, <'Critical Error: %s', 0>, [message]
     invoke ExitProcess, 0
 endp
 
-manualmap_2:
-    invoke CreateFileA, dllPath, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
+proc manualmap_2, path
+    invoke CreateFileA, [path], GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
     mov [fileHandle], eax
     invoke GetFileSizeEx, eax, fileSize
     cinvoke printf, <'File size: %d', 10, 0>, [fileSize.LowPart]
@@ -218,8 +229,8 @@ manualmap_2:
     mov [processHandle], eax
 
     invoke HeapFree, [heapHandle], 0, [heapMemory]
+    invoke ExitProcess, 0
 
-    retn
     heapFail:
         stdcall criticalError, <'Failed to get process heap handle!', 0>
     heapAllocFail:
@@ -229,13 +240,15 @@ manualmap_2:
     openProcessFail:
         stdcall criticalError, <'Failed to open process!', 0>
 
+endp
+
 section '.bss' data readable writable
 
 argc    dd ?
 argv    dd ?
 env     dd ?
-dllPath rb MAX_PATH
-dllPathLength dd ?
+;dllPath rb MAX_PATH
+;dllPathLength dd ?
 processHandle dd ?
 fileSize LARGE_INTEGER ?
 heapHandle dd ?
