@@ -274,6 +274,7 @@ import kernel32, \
        GetProcessHeap, 'GetProcessHeap', \
        HeapAlloc, 'HeapAlloc', \
        HeapFree, 'HeapFree', \
+       LoadLibraryA, 'LoadLibraryA', \
        OpenProcess, 'OpenProcess', \
        Process32First, 'Process32First', \
        Process32Next, 'Process32Next', \
