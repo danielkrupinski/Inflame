@@ -58,6 +58,40 @@ struct IMAGE_DATA_DIRECTORY
        Size                    dd ?
 ends
 
+struct IMAGE_OPTIONAL_HEADER
+       Magic                       dw ?
+       MajorLinkerVersion          db ?
+       MinorLinkerVersion          db ?
+       SizeOfCode                  dd ?
+       SizeOfInitializedData       dd ?
+       SizeOfUninitializedData     dd ?
+       AddressOfEntryPoint         dd ?
+       BaseOfCode                  dd ?
+       BaseOfData                  dd ?
+       ImageBase                   dd ?
+       SectionAlignment            dd ?
+       FileAlignment               dd ?
+       MajorOperatingSystemVersion dw ?
+       MinorOperatingSystemVersion dw ?
+       MajorImageVersion           dw ?
+       MinorImageVersion           dw ?
+       MajorSubsystemVersion       dw ?
+       MinorSubsystemVersion       dw ?
+       Win32VersionValue           dd ?
+       SizeOfImage                 dd ?
+       SizeOfHeaders               dd ?
+       CheckSum                    dd ?
+       Subsystem                   dw ?
+       DllCharacteristics          dw ?
+       SizeOfStackReserve          dd ?
+       SizeOfStackCommit           dd ?
+       SizeOfHeapReserve           dd ?
+       SizeOfHeapCommit            dd ?
+       LoaderFlags                 dd ?
+       NumberOfRvaAndSizes         dd ?
+       DataDirectory               IMAGE_DATA_DIRECTORY
+ends
+
 section '.text' code executable
 
 main:
