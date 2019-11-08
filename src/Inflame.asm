@@ -231,6 +231,7 @@ proc manualmap_2, path, pid
     mov [handle], eax
     cinvoke printf, <'Process handle: %p', 10, 0>, eax
 
+    invoke CloseHandle, [handle]
     invoke HeapFree, [heapHandle], 0, [heapMemory]
     invoke ExitProcess, 0
 
