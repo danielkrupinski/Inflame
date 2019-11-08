@@ -112,7 +112,10 @@ main:
     mov esi, [argv]
     cinvoke strcmp, dword [esi + 4], <'-loadlibrary', 0>
     test eax, eax
-    jz loadlibrary
+    jnz skip
+    mov esi, [argv]
+    stdcall loadlibrary, <stdcall findProcessId, dword [esi + 12]>
+    skip:
     mov esi, [argv]
     cinvoke strcmp, dword [esi + 4], <'-manual-map', 0>
     test eax, eax
@@ -151,18 +154,20 @@ proc findProcessId, name
         ret
 endp
 
-loadlibrary:
-    mov esi, [argv]
-    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, <stdcall findProcessId, dword [esi + 12]>
-    mov [processHandle], eax
-    invoke VirtualAllocEx, [processHandle], NULL, dllPathLength, MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
+proc loadlibrary, pid
+    local handle:DWORD, allocatedMemory:DWORD
+
+    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, [pid]
+    mov [handle], eax
+    invoke VirtualAllocEx, [handle], NULL, dllPathLength, MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
     mov [allocatedMemory], eax
-    invoke WriteProcessMemory, [processHandle], [allocatedMemory], dllPath, [dllPathLength], NULL
-    invoke CreateRemoteThread, [processHandle], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, [allocatedMemory], 0, NULL
+    invoke WriteProcessMemory, [handle], [allocatedMemory], dllPath, [dllPathLength], NULL
+    invoke CreateRemoteThread, [handle], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, [allocatedMemory], 0, NULL
     invoke WaitForSingleObject, eax, 0xFFFFFFFF
-    invoke VirtualFreeEx, [processHandle], [allocatedMemory], dllPathLength, MEM_RELEASE
-    invoke CloseHandle, [processHandle]
-    retn
+    invoke VirtualFreeEx, [handle], [allocatedMemory], dllPathLength, MEM_RELEASE
+    invoke CloseHandle, [handle]
+    invoke ExitProcess, 0
+endp
 
 manualmap:
     mov esi, [argv]
@@ -232,7 +237,6 @@ env     dd ?
 dllPath rb MAX_PATH
 dllPathLength dd ?
 processHandle dd ?
-allocatedMemory dd ?
 fileSize LARGE_INTEGER ?
 heapHandle dd ?
 heapMemory dd ?
