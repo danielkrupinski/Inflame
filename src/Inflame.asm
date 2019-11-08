@@ -191,7 +191,7 @@ proc criticalError, message
 endp
 
 proc manualmap_2, path, pid
-    local handle:DWORD, fileSize:LARGE_INTEGER
+    local handle:DWORD, fileSize:LARGE_INTEGER, imageMemory:DWORD
 
     invoke CreateFileA, [path], GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
     mov [fileHandle], eax
@@ -222,7 +222,7 @@ proc manualmap_2, path, pid
     cinvoke printf, <'DOS SIGNATURE: 0x%X', 10, 0>, ebx
 
     mov eax, [heapMemory]
-    add eax, [eax + IMAGE_DOS_HEADER.e_lfanew] 
+    add eax, [eax + IMAGE_DOS_HEADER.e_lfanew]
     cinvoke printf, <'Size of Image: %d', 10, 0>, [eax + IMAGE_NT_HEADERS.OptionalHeader.SizeOfImage]
 
     invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, [pid]
@@ -231,6 +231,13 @@ proc manualmap_2, path, pid
     mov [handle], eax
     cinvoke printf, <'Process handle: %p', 10, 0>, eax
 
+    mov eax, [heapMemory]
+    add eax, [eax + IMAGE_DOS_HEADER.e_lfanew]
+    invoke VirtualAllocEx, [handle], NULL, [eax + IMAGE_NT_HEADERS.OptionalHeader.SizeOfImage], MEM_COMMIT + MEM_RESERVE, PAGE_EXECUTE_READWRITE
+    mov [imageMemory], eax
+    cinvoke printf, <'Image memory: %p', 10, 0>, eax
+
+    invoke VirtualFreeEx, [handle], [imageMemory], 0, MEM_RELEASE
     invoke CloseHandle, [handle]
     invoke HeapFree, [heapHandle], 0, [heapMemory]
     invoke ExitProcess, 0
