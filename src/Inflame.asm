@@ -190,7 +190,7 @@ proc criticalError, message
     invoke ExitProcess, 0
 endp
 
-proc manualmap_2, path
+proc manualmap_2, path, pid
     local handle:DWORD, fileSize:LARGE_INTEGER
 
     invoke CreateFileA, [path], GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
@@ -225,8 +225,7 @@ proc manualmap_2, path
     add eax, [eax + IMAGE_DOS_HEADER.e_lfanew] 
     cinvoke printf, <'Size of Image: %d', 10, 0>, [eax + IMAGE_NT_HEADERS.OptionalHeader.SizeOfImage]
 
-    mov esi, [argv]
-    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, <stdcall findProcessId, dword [esi + 12]>
+    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, [pid]
     test eax, eax
     jz openProcessFail
     mov [handle], eax
