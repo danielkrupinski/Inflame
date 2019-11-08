@@ -117,10 +117,7 @@ proc main
     test eax, eax
     jnz .skip
     lea eax, [path]
-    cinvoke strlen, eax
-    inc eax
-    lea ebx, [path]
-    stdcall loadlibrary, ebx, eax, [pid]
+    stdcall loadlibrary, eax, [pid]
     .skip:
         mov esi, [argv]
         cinvoke strcmp, dword [esi + 4], <'-manual-map', 0>
@@ -165,12 +162,15 @@ proc findProcessId, name
         ret
 endp
 
-proc loadlibrary, path, pathLength, pid
-    local handle:DWORD, allocatedMemory:DWORD
+proc loadlibrary, path, pid
+    local handle:DWORD, allocatedMemory:DWORD, pathLength:DWORD
 
     invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, [pid]
     mov [handle], eax
-    invoke VirtualAllocEx, [handle], NULL, [pathLength], MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
+    cinvoke strlen, [path]
+    inc eax
+    mov [pathLength], eax
+    invoke VirtualAllocEx, [handle], NULL, eax, MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
     mov [allocatedMemory], eax
     invoke WriteProcessMemory, [handle], [allocatedMemory], [path], [pathLength], NULL
     invoke CreateRemoteThread, [handle], NULL, 0, [LoadLibraryA], [allocatedMemory], 0, NULL
