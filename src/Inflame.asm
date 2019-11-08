@@ -173,7 +173,7 @@ proc loadlibrary, path, pathLength, pid
     invoke VirtualAllocEx, [handle], NULL, [pathLength], MEM_COMMIT + MEM_RESERVE, PAGE_READWRITE
     mov [allocatedMemory], eax
     invoke WriteProcessMemory, [handle], [allocatedMemory], [path], [pathLength], NULL
-    invoke CreateRemoteThread, [handle], NULL, 0, <invoke GetProcAddress, <invoke GetModuleHandleA, <'kernel32.dll', 0>>, <'LoadLibraryA', 0>>, [allocatedMemory], 0, NULL
+    invoke CreateRemoteThread, [handle], NULL, 0, [LoadLibraryA], [allocatedMemory], 0, NULL
     invoke WaitForSingleObject, eax, 0xFFFFFFFF
     invoke VirtualFreeEx, [handle], [allocatedMemory], [pathLength], MEM_RELEASE
     invoke CloseHandle, [handle]
