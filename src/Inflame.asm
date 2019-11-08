@@ -92,6 +92,12 @@ struct IMAGE_OPTIONAL_HEADER
        DataDirectory               IMAGE_DATA_DIRECTORY
 ends
 
+struct IMAGE_NT_HEADERS
+       Signature               dd ?
+       FileHeader              IMAGE_FILE_HEADER
+       OptionalHeader          IMAGE_OPTIONAL_HEADER
+ends
+
 section '.text' code executable
 
 main:
