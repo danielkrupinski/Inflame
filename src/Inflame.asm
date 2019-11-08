@@ -206,6 +206,12 @@ manualmap_2:
     add eax, [eax + IMAGE_DOS_HEADER.e_lfanew] 
     cinvoke printf, <'Size of Image: %d', 10, 0>, [eax + IMAGE_NT_HEADERS.OptionalHeader.SizeOfImage]
 
+    mov esi, [argv]
+    invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, <stdcall findProcessId, dword [esi + 12]>
+    test eax, eax
+    jz openProcessFail
+    mov [processHandle], eax
+
     invoke HeapFree, [heapHandle], 0, [heapMemory]
 
     retn
@@ -215,6 +221,8 @@ manualmap_2:
         stdcall criticalError, <'Failed to allocate heap memory!', 0>
     readFileFail:
         stdcall criticalError, <'Failed to read dll file!', 0>
+    openProcessFail:
+        stdcall criticalError, <'Failed to open process!', 0>
 
 section '.bss' data readable writable
 
