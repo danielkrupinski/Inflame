@@ -53,6 +53,11 @@ struct IMAGE_FILE_HEADER
        Characteristics         dw ?
 ends
 
+struct IMAGE_DATA_DIRECTORY
+       VirtualAddress          dd ?
+       Size                    dd ?
+ends
+
 section '.text' code executable
 
 main:
