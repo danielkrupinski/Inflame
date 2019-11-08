@@ -191,7 +191,7 @@ proc criticalError, message
 endp
 
 proc manualmap_2, path, pid
-    local handle:DWORD, fileSize:LARGE_INTEGER, imageMemory:DWORD
+    local handle:DWORD, fileSize:LARGE_INTEGER, imageMemory:DWORD, heapHandle:DWORD
 
     invoke CreateFileA, [path], GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
     mov [fileHandle], eax
@@ -258,7 +258,6 @@ section '.bss' data readable writable
 argc    dd ?
 argv    dd ?
 env     dd ?
-heapHandle dd ?
 heapMemory dd ?
 fileHandle dd ?
 
