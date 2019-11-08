@@ -191,9 +191,12 @@ proc criticalError, message
 endp
 
 proc manualmap_2, path
+    local fileSize:LARGE_INTEGER
+
     invoke CreateFileA, [path], GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
     mov [fileHandle], eax
-    invoke GetFileSizeEx, eax, fileSize
+    lea ebx, [fileSize]
+    invoke GetFileSizeEx, eax, ebx
     cinvoke printf, <'File size: %d', 10, 0>, [fileSize.LowPart]
 
     invoke GetProcessHeap
@@ -247,10 +250,7 @@ section '.bss' data readable writable
 argc    dd ?
 argv    dd ?
 env     dd ?
-;dllPath rb MAX_PATH
-;dllPathLength dd ?
 processHandle dd ?
-fileSize LARGE_INTEGER ?
 heapHandle dd ?
 heapMemory dd ?
 fileHandle dd ?
