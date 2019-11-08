@@ -191,7 +191,7 @@ proc criticalError, message
 endp
 
 proc manualmap_2, path
-    local fileSize:LARGE_INTEGER
+    local handle:DWORD, fileSize:LARGE_INTEGER
 
     invoke CreateFileA, [path], GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
     mov [fileHandle], eax
@@ -229,7 +229,8 @@ proc manualmap_2, path
     invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, <stdcall findProcessId, dword [esi + 12]>
     test eax, eax
     jz openProcessFail
-    mov [processHandle], eax
+    mov [handle], eax
+    cinvoke printf, <'Process handle: %p', 10, 0>, eax
 
     invoke HeapFree, [heapHandle], 0, [heapMemory]
     invoke ExitProcess, 0
@@ -250,7 +251,6 @@ section '.bss' data readable writable
 argc    dd ?
 argv    dd ?
 env     dd ?
-processHandle dd ?
 heapHandle dd ?
 heapMemory dd ?
 fileHandle dd ?
