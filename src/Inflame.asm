@@ -269,7 +269,6 @@ import kernel32, \
        ExitProcess, 'ExitProcess', \
        GetFileSizeEx, 'GetFileSizeEx', \
        GetFullPathNameA, 'GetFullPathNameA', \
-       GetModuleHandleA, 'GetModuleHandleA', \
        GetProcAddress, 'GetProcAddress', \
        GetProcessHeap, 'GetProcessHeap', \
        HeapAlloc, 'HeapAlloc', \
