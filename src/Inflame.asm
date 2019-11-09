@@ -203,6 +203,13 @@ proc criticalError, message
     invoke ExitProcess, 0
 endp
 
+proc loadImage, data
+
+
+
+endp
+loadImageSize dd $ - loadImage
+
 proc manualmap_2, path, pid
     local handle:DWORD, fileSize:LARGE_INTEGER, imageMemory:DWORD, heapHandle:DWORD, ntHeaders:DWORD
 
