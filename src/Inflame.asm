@@ -98,6 +98,19 @@ struct IMAGE_NT_HEADERS
        OptionalHeader          IMAGE_OPTIONAL_HEADER
 ends
 
+struct IMAGE_SECTION_HEADER
+       Name                    rb 8
+       VirtualSize             dd ?
+       VirtualAddress          dd ?
+       SizeOfRawData           dd ?
+       PointerToRawData        dd ?
+       PointerToRelocations    dd ?
+       PointerToLinenumbers    dd ?
+       NumberOfRelocations     dw ?
+       NumberOfLinenumbers     dw ?
+       Characteristics         dd ?
+ends
+
 section '.text' code executable
 
 proc main
