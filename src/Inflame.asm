@@ -203,6 +203,13 @@ proc criticalError, message
     invoke ExitProcess, 0
 endp
 
+struct LoaderData
+       imageBase            dd ?
+       loadLibraryA         dd ?
+       getProcAddress       dd ?
+       rtlZeroMemory        dd ?
+ends
+
 proc loadImage, data
 
 
