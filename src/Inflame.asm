@@ -249,6 +249,32 @@ proc manualmap_2, path, pid
     mov [imageMemory], eax
     cinvoke printf, <'Image memory: %p', 10, 0>, eax
 
+    mov eax, [ntHeaders]
+    xor ebx, ebx
+    mov bx, [eax + IMAGE_NT_HEADERS.FileHeader.NumberOfSections]
+
+    mov ecx, ebx
+    @@:
+        push ecx
+        dec ecx
+
+        mov ebx, [ntHeaders]
+        add ebx, sizeof.IMAGE_NT_HEADERS
+        mov eax, sizeof.IMAGE_SECTION_HEADER
+        mul ecx
+        add ebx, eax
+
+        mov edx, [imageMemory]
+        add edx, [ebx + IMAGE_SECTION_HEADER.VirtualAddress]
+        mov eax, [heapMemory]
+        add eax, [ebx + IMAGE_SECTION_HEADER.PointerToRawData]
+
+        invoke WriteProcessMemory, [handle], edx, eax, [ebx + IMAGE_SECTION_HEADER.SizeOfRawData], NULL
+
+        pop ecx
+        dec ecx
+        jnz @b
+
     invoke VirtualFreeEx, [handle], [imageMemory], 0, MEM_RELEASE
     invoke CloseHandle, [handle]
     invoke HeapFree, [heapHandle], 0, [heapMemory]
