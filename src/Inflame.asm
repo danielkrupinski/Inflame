@@ -89,7 +89,7 @@ struct IMAGE_OPTIONAL_HEADER
        SizeOfHeapCommit            dd ?
        LoaderFlags                 dd ?
        NumberOfRvaAndSizes         dd ?
-       DataDirectory               IMAGE_DATA_DIRECTORY
+       DataDirectory               db 16 * sizeof.IMAGE_DATA_DIRECTORY dup ?
 ends
 
 struct IMAGE_NT_HEADERS
