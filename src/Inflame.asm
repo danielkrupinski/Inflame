@@ -327,6 +327,7 @@ import kernel32, \
        ExitProcess, 'ExitProcess', \
        GetFileSizeEx, 'GetFileSizeEx', \
        GetFullPathNameA, 'GetFullPathNameA', \
+       GetProcAddress, 'GetProcAddress', \
        GetProcessHeap, 'GetProcessHeap', \
        HeapAlloc, 'HeapAlloc', \
        HeapFree, 'HeapFree', \
