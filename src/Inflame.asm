@@ -204,7 +204,7 @@ proc criticalError, message
 endp
 
 proc manualmap_2, path, pid
-    local handle:DWORD, fileSize:LARGE_INTEGER, imageMemory:DWORD, heapHandle:DWORD
+    local handle:DWORD, fileSize:LARGE_INTEGER, imageMemory:DWORD, heapHandle:DWORD, ntHeaders:DWORD
 
     invoke CreateFileA, [path], GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
     mov [fileHandle], eax
@@ -230,12 +230,12 @@ proc manualmap_2, path, pid
     cinvoke printf, <'ReadFile: %d', 10, 0>, eax
 
     mov eax, [heapMemory]
-    xor ebx, ebx
-    mov bx, [eax + IMAGE_DOS_HEADER.e_magic]
-    cinvoke printf, <'DOS SIGNATURE: 0x%X', 10, 0>, ebx
+    pushd [eax + IMAGE_DOS_HEADER.e_magic]
+    cinvoke printf, <'DOS SIGNATURE: 0x%X', 10, 0>
 
     mov eax, [heapMemory]
     add eax, [eax + IMAGE_DOS_HEADER.e_lfanew]
+    mov [ntHeaders], eax
     cinvoke printf, <'Size of Image: %d', 10, 0>, [eax + IMAGE_NT_HEADERS.OptionalHeader.SizeOfImage]
 
     invoke OpenProcess, PROCESS_VM_WRITE + PROCESS_VM_OPERATION + PROCESS_CREATE_THREAD, FALSE, [pid]
@@ -244,8 +244,7 @@ proc manualmap_2, path, pid
     mov [handle], eax
     cinvoke printf, <'Process handle: %p', 10, 0>, eax
 
-    mov eax, [heapMemory]
-    add eax, [eax + IMAGE_DOS_HEADER.e_lfanew]
+    mov eax, [ntHeaders]
     invoke VirtualAllocEx, [handle], NULL, [eax + IMAGE_NT_HEADERS.OptionalHeader.SizeOfImage], MEM_COMMIT + MEM_RESERVE, PAGE_EXECUTE_READWRITE
     mov [imageMemory], eax
     cinvoke printf, <'Image memory: %p', 10, 0>, eax
