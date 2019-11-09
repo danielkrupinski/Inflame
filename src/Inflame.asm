@@ -211,14 +211,26 @@ struct LoaderData
 ends
 
 proc loadImage, data
+    local currentReloc:DWORD
 
-
-
+    mov eax, [data]
+    stdcall [eax + LoaderData.loadLibraryA], <'user32.dll', 0>
+    mov ebx, [data]
+    stdcall [ebx + LoaderData.getProcAddress], eax, <'MessageBoxA', 0>
+    stdcall eax, 0, <'Demo', 0>, <'It works!', 0>, MB_OK
+    ret
 endp
 loadImageSize dd $ - loadImage
 
 proc manualmap_2, path, pid
-    local handle:DWORD, fileSize:LARGE_INTEGER, imageMemory:DWORD, heapHandle:DWORD, ntHeaders:DWORD
+    local handle:DWORD, fileSize:LARGE_INTEGER, imageMemory:DWORD, heapHandle:DWORD, ntHeaders:DWORD, loaderData:LoaderData
+
+    mov eax, [LoadLibraryA]
+    mov [loaderData + LoaderData.loadLibraryA], eax
+    mov eax, [GetProcAddress]
+    mov [loaderData + LoaderData.getProcAddress], eax
+    lea eax, [loaderData]
+    stdcall loadImage, eax
 
     invoke CreateFileA, [path], GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
     mov [fileHandle], eax
