@@ -111,6 +111,11 @@ struct IMAGE_SECTION_HEADER
        Characteristics         dd ?
 ends
 
+struct IMAGE_BASE_RELOCATION
+       VirtualAddress          dd ?
+       SizeOfBlock             dd ?
+ends
+
 section '.text' code executable
 
 proc main
