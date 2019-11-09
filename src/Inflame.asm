@@ -128,10 +128,10 @@ proc main
 
     cinvoke strcmp, dword [esi + 4], <'-loadlibrary', 0>
     test eax, eax
-    jnz .skip
+    jnz @f
     lea eax, [path]
     stdcall loadlibrary, eax, [pid]
-    .skip:
+    @@:
         mov esi, [argv]
         cinvoke strcmp, dword [esi + 4], <'-manual-map', 0>
         test eax, eax
@@ -156,7 +156,7 @@ proc findProcessId, name
     test eax, eax
     jz .error
     
-    .loop1:
+    @@:
         lea eax, [processEntry.szExeFile]
         cinvoke strcmp, eax, [name]
         test eax, eax
@@ -164,7 +164,7 @@ proc findProcessId, name
         lea eax, [processEntry]
         invoke Process32Next, [snapshot], eax
         test eax, eax
-        jnz .loop1
+        jnz @b
 
     .error:
         xor eax, eax
