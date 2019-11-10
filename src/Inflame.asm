@@ -216,26 +216,28 @@ struct LoaderData
 ends
 
 proc loadImage, data
-    local currentReloc:DWORD
+    local ntHeaders:DWORD, currentReloc:DWORD
 
     mov eax, [data]
     stdcall [eax + LoaderData.loadLibraryA], <'user32.dll', 0>
     mov ebx, [data]
     stdcall [ebx + LoaderData.getProcAddress], eax, <'MessageBoxA', 0>
     stdcall eax, 0, <'Demo', 0>, <'It works!', 0>, MB_OK
+
+    mov eax, [data]
+    mov eax, [eax + LoaderData.imageBase]
+    add eax, [eax + IMAGE_DOS_HEADER.e_lfanew]
+    mov [ntHeaders], eax
+
+    add eax, IMAGE_NT_HEADERS.OptionalHeader.DataDirectory + 5 * sizeof.IMAGE_DATA_DIRECTORY
+    cinvoke printf, <'Reloc virtual address: %p', 0>, [eax + IMAGE_DATA_DIRECTORY.VirtualAddress]
+
     ret
 endp
 loadImageSize dd $ - loadImage
 
 proc manualmap_2, path, pid
     local handle:DWORD, fileSize:LARGE_INTEGER, imageMemory:DWORD, heapHandle:DWORD, ntHeaders:DWORD, loaderData:LoaderData
-
-    mov eax, [LoadLibraryA]
-    mov [loaderData + LoaderData.loadLibraryA], eax
-    mov eax, [GetProcAddress]
-    mov [loaderData + LoaderData.getProcAddress], eax
-    lea eax, [loaderData]
-    stdcall loadImage, eax
 
     invoke CreateFileA, [path], GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
     mov [fileHandle], eax
@@ -305,6 +307,16 @@ proc manualmap_2, path, pid
         pop ecx
         dec ecx
         jnz @b
+
+    
+    mov eax, [LoadLibraryA]
+    mov [loaderData.loadLibraryA], eax
+    mov eax, [GetProcAddress]
+    mov [loaderData.getProcAddress], eax
+    mov eax, [heapMemory]
+    mov [loaderData.imageBase], eax
+    lea eax, [loaderData]
+    stdcall loadImage, eax
 
     invoke VirtualFreeEx, [handle], [imageMemory], 0, MEM_RELEASE
     invoke CloseHandle, [handle]
