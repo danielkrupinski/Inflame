@@ -209,14 +209,18 @@ proc criticalError, message
 endp
 
 struct LoaderData
-       imageBase            dd ?
-       loadLibraryA         dd ?
-       getProcAddress       dd ?
-       rtlZeroMemory        dd ?
+       baseAddress            dd ?
+       loadLibraryA           dd ?
+       getProcAddress         dd ?
+       rtlZeroMemory          dd ?
+       imageBase              dd ?
+       relocVirtualAddress    dd ?
+       importVirtualAddress   dd ?
+       addressOfEntryPoint    dd ?
 ends
 
 proc loadImage, data
-    local ntHeaders:DWORD, currentReloc:DWORD
+    local currentReloc:DWORD
 
     mov eax, [data]
     stdcall [eax + LoaderData.loadLibraryA], <'user32.dll', 0>
@@ -225,12 +229,7 @@ proc loadImage, data
     stdcall eax, 0, <'Demo', 0>, <'It works!', 0>, MB_OK
 
     mov eax, [data]
-    mov eax, [eax + LoaderData.imageBase]
-    add eax, [eax + IMAGE_DOS_HEADER.e_lfanew]
-    mov [ntHeaders], eax
-
-    add eax, IMAGE_NT_HEADERS.OptionalHeader.DataDirectory + 5 * sizeof.IMAGE_DATA_DIRECTORY
-    cinvoke printf, <'Reloc virtual address: %p', 0>, [eax + IMAGE_DATA_DIRECTORY.VirtualAddress]
+    cinvoke printf, <'Reloc virtual address: %p', 0>, [eax + LoaderData.relocVirtualAddress]
 
     ret
 endp
@@ -315,6 +314,10 @@ proc manualmap_2, path, pid
     mov [loaderData.getProcAddress], eax
     mov eax, [heapMemory]
     mov [loaderData.imageBase], eax
+    mov eax, [ntHeaders]
+    mov eax, dword [eax + IMAGE_NT_HEADERS.OptionalHeader.DataDirectory + 5 * sizeof.IMAGE_DATA_DIRECTORY + IMAGE_DATA_DIRECTORY.VirtualAddress]
+    mov [loaderData.relocVirtualAddress], eax
+
     lea eax, [loaderData]
     stdcall loadImage, eax
 
