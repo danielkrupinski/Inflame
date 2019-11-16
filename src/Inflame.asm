@@ -222,11 +222,11 @@ ends
 proc loadImage, data
     local currentReloc:DWORD, delta:DWORD, relocInfo:DWORD
 
- ;   mov eax, [data]
- ;   stdcall [eax + LoaderData.loadLibraryA], <'user32.dll', 0>
- ;   mov ebx, [data]
- ;   stdcall [ebx + LoaderData.getProcAddress], eax, <'MessageBoxA', 0>
- ;   stdcall eax, 0, <'Demo', 0>, <'It works!', 0>, MB_OK
+    mov eax, [data]
+    stdcall [eax + LoaderData.loadLibraryA], <'user32.dll', 0>
+    mov ebx, [data]
+    stdcall [ebx + LoaderData.getProcAddress], eax, <'MessageBoxA', 0>
+    stdcall eax, 0, <'Demo', 0>, <'It works!', 0>, MB_OK
 
     mov eax, [data]
     mov ebx, [eax + LoaderData.relocVirtualAddress]
@@ -241,7 +241,7 @@ endp
 loadImageSize dd $ - loadImage
 
 proc manualmap_2, path, pid
-    local handle:DWORD, fileSize:LARGE_INTEGER, imageMemory:DWORD, heapHandle:DWORD, ntHeaders:DWORD, loaderData:LoaderData
+    local handle:DWORD, fileSize:LARGE_INTEGER, imageMemory:DWORD, heapHandle:DWORD, ntHeaders:DWORD, loaderData:LoaderData, loaderMemory:DWORD
 
     invoke CreateFileA, [path], GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
     mov [fileHandle], eax
@@ -267,8 +267,9 @@ proc manualmap_2, path, pid
     cinvoke printf, <'ReadFile: %d', 10, 0>, eax
 
     mov eax, [heapMemory]
-    pushd [eax + IMAGE_DOS_HEADER.e_magic]
-    cinvoke printf, <'DOS SIGNATURE: 0x%X', 10, 0>
+    xor ebx, ebx
+    mov bx, [eax + IMAGE_DOS_HEADER.e_magic]
+    cinvoke printf, <'DOS SIGNATURE: 0x%X', 10, 0>, ebx
 
     mov eax, [heapMemory]
     add eax, [eax + IMAGE_DOS_HEADER.e_lfanew]
@@ -285,7 +286,7 @@ proc manualmap_2, path, pid
     invoke VirtualAllocEx, [handle], NULL, [eax + IMAGE_NT_HEADERS.OptionalHeader.SizeOfImage], MEM_COMMIT + MEM_RESERVE, PAGE_EXECUTE_READWRITE
     mov [imageMemory], eax
     cinvoke printf, <'Image memory: %p', 10, 0>, eax
-
+    
     mov eax, [ntHeaders]
     xor ebx, ebx
     mov bx, [eax + IMAGE_NT_HEADERS.FileHeader.NumberOfSections]
@@ -317,7 +318,8 @@ proc manualmap_2, path, pid
     mov [loaderData.loadLibraryA], eax
     mov eax, [GetProcAddress]
     mov [loaderData.getProcAddress], eax
-    mov eax, [heapMemory]
+    mov eax, [ntHeaders]
+    mov eax, [eax + IMAGE_NT_HEADERS.OptionalHeader.ImageBase]
     mov [loaderData.imageBase], eax
     mov eax, [ntHeaders]
     mov eax, dword [eax + IMAGE_NT_HEADERS.OptionalHeader.DataDirectory + 5 * sizeof.IMAGE_DATA_DIRECTORY + IMAGE_DATA_DIRECTORY.VirtualAddress]
@@ -325,10 +327,23 @@ proc manualmap_2, path, pid
     mov eax, [imageMemory]
     mov [loaderData.allocationBase], eax
 
-    lea eax, [loaderData]
-    stdcall loadImage, eax
+    invoke VirtualAllocEx, [handle], NULL, 4096, MEM_COMMIT + MEM_RESERVE, PAGE_EXECUTE_READ
+    mov [loaderMemory], eax
+    cinvoke printf, <'Loader memory: %p', 10, 0>, eax
 
-    invoke VirtualFreeEx, [handle], [imageMemory], 0, MEM_RELEASE
+    lea eax, [loaderData]
+    invoke WriteProcessMemory, [handle], [loaderMemory], eax, sizeof.LoaderData, NULL
+
+    mov eax, [loaderMemory]
+    add eax, sizeof.LoaderData
+    invoke WriteProcessMemory, [handle], eax, loadImage, [loadImageSize], NULL
+
+    mov eax, [loaderMemory]
+    add eax, sizeof.LoaderData
+    invoke CreateRemoteThread, [handle], NULL, 0, eax, [loaderMemory], 0, NULL
+
+    invoke WaitForSingleObject, eax, 0xFFFFFFFF
+    invoke VirtualFreeEx, [handle], [loaderMemory], 0, MEM_RELEASE
     invoke CloseHandle, [handle]
     invoke HeapFree, [heapHandle], 0, [heapMemory]
     invoke ExitProcess, 0
