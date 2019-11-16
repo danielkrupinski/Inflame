@@ -220,16 +220,21 @@ struct LoaderData
 ends
 
 proc loadImage, data
-    local currentReloc:DWORD
+    local currentReloc:DWORD, delta:DWORD, relocInfo:DWORD
+
+ ;   mov eax, [data]
+ ;   stdcall [eax + LoaderData.loadLibraryA], <'user32.dll', 0>
+ ;   mov ebx, [data]
+ ;   stdcall [ebx + LoaderData.getProcAddress], eax, <'MessageBoxA', 0>
+ ;   stdcall eax, 0, <'Demo', 0>, <'It works!', 0>, MB_OK
 
     mov eax, [data]
-    stdcall [eax + LoaderData.loadLibraryA], <'user32.dll', 0>
-    mov ebx, [data]
-    stdcall [ebx + LoaderData.getProcAddress], eax, <'MessageBoxA', 0>
-    stdcall eax, 0, <'Demo', 0>, <'It works!', 0>, MB_OK
-
-    mov eax, [data]
-    cinvoke printf, <'Reloc virtual address: %p', 0>, [eax + LoaderData.relocVirtualAddress]
+    mov ebx, [eax + LoaderData.relocVirtualAddress]
+    add ebx, [eax + LoaderData.allocationBase]
+    mov [currentReloc], ebx
+    mov ebx, [eax + LoaderData.allocationBase]
+    sub ebx, [eax + LoaderData.imageBase]
+    mov [delta], ebx
 
     ret
 endp
