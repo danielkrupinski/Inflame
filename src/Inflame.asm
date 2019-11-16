@@ -209,7 +209,7 @@ proc criticalError, message
 endp
 
 struct LoaderData
-       baseAddress            dd ?
+       allocationBase         dd ?
        loadLibraryA           dd ?
        getProcAddress         dd ?
        rtlZeroMemory          dd ?
@@ -317,6 +317,8 @@ proc manualmap_2, path, pid
     mov eax, [ntHeaders]
     mov eax, dword [eax + IMAGE_NT_HEADERS.OptionalHeader.DataDirectory + 5 * sizeof.IMAGE_DATA_DIRECTORY + IMAGE_DATA_DIRECTORY.VirtualAddress]
     mov [loaderData.relocVirtualAddress], eax
+    mov eax, [imageMemory]
+    mov [loaderData.allocationBase], eax
 
     lea eax, [loaderData]
     stdcall loadImage, eax
